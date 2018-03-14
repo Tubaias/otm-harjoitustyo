@@ -1,0 +1,115 @@
+commit 8745e3cb63272d7bc09810184913309917495d52
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 17:14:48 2018 +0200
+
+    asd
+
+ tiedostoja/file1.txt  | 0
+ tiedostoja/file2.txt  | 0
+ tiedostoja/file22.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit cf71feb4543e559adea26503ce435f8796e5eeb6
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 17:08:02 2018 +0200
+
+    tiedostoja
+
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c6fe643aa70a2d970c8d764cecc63e3086d6475e
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:32:20 2018 +0200
+
+    asdoihewoirhwroijeaoi
+
+ eka.txt    | 2 +-
+ kolmas.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit de65e8bcfb380201516966409c171280bdbe9c62
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:30:49 2018 +0200
+
+    renamed tiedosto
+
+ eka.txt      | 4 ++++
+ tiedosto.txt | 4 ----
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit d98094e543499a4664b6b4e927b3e6068ee035f1
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:29:26 2018 +0200
+
+    deleted toinen
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit e09160198e974d25f2006e77cb89e7d52f755591
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:27:57 2018 +0200
+
+    no more ipsum
+
+ tiedosto.txt | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit 7cb18f5e27653b20f54daf95de00f9b22ba58504
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:27:04 2018 +0200
+
+    lorem ipsum
+
+ tiedosto.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 687604ef084509d7a74693e8eda1a105b662b0f3
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:23:03 2018 +0200
+
+    stuff
+
+ stuff/jokin_tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1427db34191386f007e05fa169a54721a251e74b
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:22:17 2018 +0200
+
+    lisää muokkausta
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 322b44a6027ee0da4db6dace440aa20377538f16
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:21:33 2018 +0200
+
+    kolmastettu
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 0deaae314ed0d4a7e96b8613e4b90550ccba67eb
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:19:28 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 5d8b6774200f5632ccf011d0ec337e45aa1316ba
+Author: Topias Teittinen <topias_t@hotmail.com>
+Date:   Wed Mar 14 16:16:50 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
