@@ -1,4 +1,5 @@
 # OTM-harjoitustyö
+Ohjelmistotekniikan menetelmät -kurssia varten toteutettava harjoitustyö. Ohjelman on tarkoitus olla yksinkertainen tasohyppelypeli, joka toteutetaan Haskellin ja Gradlen avulla.
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 ## Tehtävät
