@@ -1,4 +1,6 @@
 # OTM-harjoitustyö
+## Dokumentaatio
+[Vaatimusmäärittely](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 ## Tehtävät
 ### Viikko1
 tavallista tekstiä  
