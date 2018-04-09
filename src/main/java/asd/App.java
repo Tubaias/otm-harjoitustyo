@@ -11,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -42,13 +41,11 @@ public class App extends Application {
         Button goBack = new Button("return to main menu");
 
         mainLayout.getChildren().addAll(startButton, levelSelectButton, timesButton, optionsButton);
-
-        Polygon character = new Polygon(0, 0, 50, 0, 50, 50, 0, 50);
-        character.setTranslateX(gameWindowX / 2);
-        character.setTranslateY(gameWindowY / 2);
+        
+        GameCharacter character = new GameCharacter(gameWindowX / 2, gameWindowY / 2);
 
         Pane gameDraw = new Pane();
-        gameDraw.getChildren().add(character);
+        gameDraw.getChildren().add(character.getPoly());
 
         BorderPane gameLayout = new BorderPane();
         gameLayout.setCenter(gameDraw);
@@ -69,19 +66,33 @@ public class App extends Application {
 
         gameScene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.LEFT) {
-                character.setTranslateX(character.getTranslateX() - 10);
+                character.moveLeft(10);
             }
 
             if (event.getCode() == KeyCode.RIGHT) {
-                character.setTranslateX(character.getTranslateX() + 10);
+                character.moveRight(10);
             }
             
             if (event.getCode() == KeyCode.UP) {
-                character.setTranslateY(character.getTranslateY() - 10);
+                character.moveUp(10);
             }
 
             if (event.getCode() == KeyCode.DOWN) {
-                character.setTranslateY(character.getTranslateY() + 10);
+                character.moveDown(10);
+            }
+            
+            if (event.getCode() == KeyCode.P) {
+                System.out.println(character);
+            }
+            
+            if (event.getCode() == KeyCode.ESCAPE) {
+                stage.close();
+            }
+        });
+        
+        mainScene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                stage.close();
             }
         });
 
