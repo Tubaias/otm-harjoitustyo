@@ -1,5 +1,7 @@
-package asd;
+package ui;
 
+import domain.MenuLogic;
+import domain.entity.GameCharacter;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,12 +25,16 @@ public class App extends Application {
 
         int gameWindowX = 1280;
         int gameWindowY = 720;
-
+        
         VBox mainLayout = new VBox();
-        mainLayout.setSpacing(30);
-        Scene mainScene = new Scene(mainLayout, windowX, windowY);
-        stage.setResizable(false);
+        MenuLogic menuLogic = new MenuLogic(stage);
+        OptionsMenu optionsMenu = new OptionsMenu(menuLogic, windowX, windowY);
 
+        Scene mainScene = new Scene(mainLayout, windowX, windowY);
+        menuLogic.setMainScene(mainScene);
+
+        mainLayout.setSpacing(30);
+        stage.setResizable(false);
         mainLayout.setAlignment(Pos.CENTER);
 
         mainLayout.getChildren().add(new Label("SUPER PLATFORMER EXTREME 6000"));
@@ -59,6 +65,10 @@ public class App extends Application {
                 stage.setScene(gameScene);
             }
         });
+        
+        optionsButton.setOnAction((ActionEvent event) -> {
+            stage.setScene(optionsMenu.getScene());
+        });
 
         goBack.setOnAction((ActionEvent event) -> {
             stage.setScene(mainScene);
@@ -86,13 +96,13 @@ public class App extends Application {
             }
             
             if (event.getCode() == KeyCode.ESCAPE) {
-                stage.close();
+                stage.setScene(mainScene);
             }
         });
         
         mainScene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                stage.close();
+                menuLogic.exit();
             }
         });
 

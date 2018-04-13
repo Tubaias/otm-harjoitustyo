@@ -1,5 +1,5 @@
 
-package asd;
+package domain.entity;
 
 import javafx.scene.shape.Polygon;
 
