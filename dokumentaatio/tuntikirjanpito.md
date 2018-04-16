@@ -7,4 +7,5 @@
 | 5.4.  | 1    | Lisää epäonnistunutta IntelliJ Idean konffausta |
 | 9.4.  | 3    | Javanprojektin konfigurointi, alustavan rungon koodausta ja ensimmäiset testit |
 | 13.4. | 2    | Projektin rakenteen refaktorointia ja asetusvalikon runko |
-| yht   | 9    | | 
+| 16.4. | 2    | Lisää refaktorointia ja hieman pelilogiikkaa |
+| yht   | 11    | | 
