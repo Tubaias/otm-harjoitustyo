@@ -92,4 +92,8 @@ public class MenuLogic {
     public void setGameUI(Scene gameUI) {
         this.gameUI = gameUI;
     }
+ 
+    public void centerStage() {
+        stage.centerOnScreen();
+    }
 }
