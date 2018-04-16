@@ -35,7 +35,7 @@ public class OptionsMenu {
         
         options.setSpacing(10);
         options.setAlignment(Pos.CENTER);
-        options.setPadding(new Insets(10,0,10,0));
+        options.setPadding(new Insets(10, 0, 10, 0));
         
         scroll.setMaxWidth(windowX);
         scroll.setMaxHeight(windowY);
@@ -44,8 +44,8 @@ public class OptionsMenu {
         Button fullscreenButton = new Button("Toggle fullscreen mode");
         options.getChildren().add(fullscreenButton);
         
-        for (int i = 1; i < 20; i++) {
-            options.getChildren().add(new Button("Button " + i));
+        for (int i = 1; i < 16; i++) {
+            options.getChildren().add(new Button("Placeholder " + i));
         }
         
         fullscreenButton.setOnAction((event) -> {
@@ -54,7 +54,7 @@ public class OptionsMenu {
         
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                logic.returnToMain();
+                logic.goToMain();
             }
         });
     }
