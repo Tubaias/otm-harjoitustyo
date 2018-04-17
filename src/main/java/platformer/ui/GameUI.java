@@ -1,7 +1,7 @@
-package ui;
+package platformer.ui;
 
-import domain.GameLogic;
-import domain.MenuLogic;
+import platformer.domain.GameLogic;
+import platformer.domain.MenuLogic;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.event.ActionEvent;
@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Polygon;
 
 public class GameUI {
 
@@ -19,6 +20,8 @@ public class GameUI {
     private int windowX;
     private int windowY;
     private HashMap<KeyCode, Boolean> activeKeys;
+    private Pane gameDraw;
+    private Polygon characterPoly;
 
     public GameUI(MenuLogic menuLogic, GameLogic gameLogic, int gameWindowX, int gameWindowY) {
         this.logic = menuLogic;
@@ -27,7 +30,7 @@ public class GameUI {
         this.windowY = gameWindowY;
         this.activeKeys = new HashMap();
 
-        this.init();
+        this.setup();
     }
 
     public Scene getScene() {
@@ -37,16 +40,23 @@ public class GameUI {
     public Map getKeys() {
         return this.activeKeys;
     }
+    
+    public void setCharacterPoly(Polygon poly) {
+        gameDraw.getChildren().remove(this.characterPoly);
+        this.characterPoly = poly;
+        gameDraw.getChildren().add(this.characterPoly);
+    }
 
-    private void init() {
+    private void setup() {
         logic.centerStage();
         
         gameLogic.setActiveKeys(activeKeys);
         
         Button goBack = new Button("return to main menu");
         
-        Pane gameDraw = new Pane();
-        gameDraw.getChildren().add(gameLogic.getCharacter().getPoly());
+        gameDraw = new Pane();
+        characterPoly = gameLogic.getCharacter().getPoly();
+        this.setCharacterPoly(characterPoly);
 
         BorderPane gameLayout = new BorderPane();
         gameLayout.setCenter(gameDraw);
@@ -65,31 +75,5 @@ public class GameUI {
         scene.setOnKeyReleased(event -> {
             activeKeys.put(event.getCode(), false);
         });
-
-//        scene.setOnKeyPressed(event -> {
-//            if (event.getCode() == KeyCode.LEFT) {
-//                character.moveLeft(10);
-//            }
-//
-//            if (event.getCode() == KeyCode.RIGHT) {
-//                character.moveRight(10);
-//            }
-//
-//            if (event.getCode() == KeyCode.UP) {
-//                character.moveUp(10);
-//            }
-//
-//            if (event.getCode() == KeyCode.DOWN) {
-//                character.moveDown(10);
-//            }
-//
-//            if (event.getCode() == KeyCode.P) {
-//                System.out.println(character);
-//            }
-//
-//            if (event.getCode() == KeyCode.ESCAPE) {
-//                logic.goToMain();
-//            }
-//        });
     }
 }

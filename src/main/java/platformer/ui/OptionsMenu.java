@@ -1,7 +1,7 @@
 
-package ui;
+package platformer.ui;
 
-import domain.MenuLogic;
+import platformer.domain.MenuLogic;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,14 +21,14 @@ public class OptionsMenu {
         this.windowX = windowX;
         this.windowY = windowY;
         
-        this.init();
+        this.setup();
     }
     
     public Scene getScene() {
         return this.scene;
     }
     
-    private void init() {
+    private void setup() {
         VBox options = new VBox();
         ScrollPane scroll = new ScrollPane(options);
         this.scene = new Scene(scroll, windowX, windowY);

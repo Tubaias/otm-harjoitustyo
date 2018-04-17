@@ -1,7 +1,7 @@
-package ui;
+package platformer.ui;
 
-import domain.GameLogic;
-import domain.MenuLogic;
+import platformer.domain.GameLogic;
+import platformer.domain.MenuLogic;
 import javafx.application.Application;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
@@ -28,12 +28,14 @@ public class App extends Application {
         stage.centerOnScreen();
 
         MenuLogic menuLogic = new MenuLogic(stage);
-        GameLogic gameLogic = new GameLogic(stage, gameWindowX, gameWindowY);
+        GameLogic gameLogic = new GameLogic(gameWindowX, gameWindowY);
         gameLogic.setMenuLogic(menuLogic);
 
         OptionsMenu optionsMenu = new OptionsMenu(menuLogic, windowX, windowY);
         MainMenu mainMenu = new MainMenu(menuLogic, windowX, windowY);
         GameUI gameUI = new GameUI(menuLogic, gameLogic, gameWindowX, gameWindowY);
+        
+        gameLogic.setGameUI(gameUI);
 
         menuLogic.setMainScene(mainMenu.getScene());
         menuLogic.setOptionsScene(optionsMenu.getScene());

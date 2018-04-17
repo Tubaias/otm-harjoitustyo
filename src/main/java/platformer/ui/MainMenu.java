@@ -1,7 +1,7 @@
 
-package ui;
+package platformer.ui;
 
-import domain.MenuLogic;
+import platformer.domain.MenuLogic;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,14 +21,14 @@ public class MainMenu {
         this.windowX = windowX;
         this.windowY = windowY;
         
-        this.init();
+        this.setup();
     }
     
     public Scene getScene() {
         return this.scene;
     }
     
-    private void init() {
+    private void setup() {
         VBox mainLayout = new VBox();
         mainLayout.setSpacing(30);
         mainLayout.setAlignment(Pos.CENTER);
@@ -53,7 +53,7 @@ public class MainMenu {
         
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                logic.exit();
+                logic.exitDialog();
             }
         });
     }
