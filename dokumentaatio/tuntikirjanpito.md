@@ -8,4 +8,5 @@
 | 9.4.  | 3    | Javanprojektin konfigurointi, alustavan rungon koodausta ja ensimmäiset testit |
 | 13.4. | 2    | Projektin rakenteen refaktorointia ja asetusvalikon runko |
 | 16.4. | 2    | Lisää refaktorointia ja hieman pelilogiikkaa |
-| yht   | 11    | | 
+| 17.4. | 4    | Sekalaista refaktorointia, pelilogiikan luontia ja testien kirjoittamista |
+| yht   | 15    | | 
