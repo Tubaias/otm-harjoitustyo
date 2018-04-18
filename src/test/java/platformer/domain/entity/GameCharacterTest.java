@@ -25,7 +25,7 @@ public class GameCharacterTest {
     public void moveRightIncreasesDeltaX() {
         Double dX = ch.getDeltaX();
         
-        ch.moveRight(1);
+        ch.moveRight();
         assertTrue(ch.getDeltaX() > dX);
     }
     
@@ -33,7 +33,7 @@ public class GameCharacterTest {
     public void moveLeftDecreasesDeltaX() {
         Double dX = ch.getDeltaX();
         
-        ch.moveLeft(1);
+        ch.moveLeft();
         assertTrue(ch.getDeltaX() < dX);
     }
     
@@ -49,7 +49,7 @@ public class GameCharacterTest {
     public void moveDownIncreasesY() {
         Double y = ch.getY();
         
-        ch.moveDown(1);
+        ch.moveDown();
         assertTrue(ch.getY() > y);
     }
     
@@ -57,7 +57,7 @@ public class GameCharacterTest {
     public void jumpDecreasesDeltaY() {
         Double dY = ch.getDeltaY();
         
-        ch.jump();
+        ch.simpleJump();
         assertTrue(ch.getDeltaY() < dY);
     }
 }

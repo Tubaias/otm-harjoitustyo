@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>Tubaias</groupId>
     <artifactId>otm-platformer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>Viikko 5</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
