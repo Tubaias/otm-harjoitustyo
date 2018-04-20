@@ -9,4 +9,5 @@
 | 13.4. | 2    | Projektin rakenteen refaktorointia ja asetusvalikon runko |
 | 16.4. | 2    | Lisää refaktorointia ja hieman pelilogiikkaa |
 | 17.4. | 4    | Sekalaista refaktorointia, pelilogiikan luontia ja testien kirjoittamista |
-| yht   | 15    | | 
+| 18.4. | 3    | Pelilogiikan monimutkaistamista |
+| yht   | 18    | | 
