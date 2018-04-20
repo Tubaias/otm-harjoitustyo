@@ -10,4 +10,5 @@
 | 16.4. | 2    | Lisää refaktorointia ja hieman pelilogiikkaa |
 | 17.4. | 4    | Sekalaista refaktorointia, pelilogiikan luontia ja testien kirjoittamista |
 | 18.4. | 3    | Pelilogiikan monimutkaistamista |
-| yht   | 18    | | 
+| 20.4. | 4    | Lisää pelilogiikkaa |
+| yht   | 22    | | 
