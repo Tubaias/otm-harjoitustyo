@@ -3,6 +3,7 @@ package platformer.domain.entity;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 import platformer.domain.State;
 
 public class GameCharacter {
@@ -15,6 +16,7 @@ public class GameCharacter {
     private State state;
     private boolean charged;
     private Double chargeDelta;
+    private Double jumpHeight;
 
     public GameCharacter(Double translateX, Double translateY) {
         poly = new Polygon(0, 0, 10, 0, 10, 10, 0, 10);
@@ -29,6 +31,7 @@ public class GameCharacter {
 
         this.state = State.GROUND;
         this.charged = false;
+        this.jumpHeight = 0.25;
     }
 
     public Polygon getPoly() {
@@ -61,7 +64,7 @@ public class GameCharacter {
 
     public void chargeUp() {
         charged = true;
-        chargeDelta = (Math.abs(dX) + Math.abs(dY)) * 0.5;
+        chargeDelta = (Math.abs(dX) + Math.abs(dY)) * 1.15;
         this.setColor(Color.RED);
     }
 
@@ -74,9 +77,32 @@ public class GameCharacter {
     public void setColor(Color color) {
         this.poly.setFill(color);
     }
+    
+    public boolean collision(Platform other) {
+        Polygon shape = other.getPoly();
+
+        Shape intersection = Shape.intersect(this.poly, shape);
+        
+        if (intersection.getBoundsInLocal().getWidth() != -1) {
+            state = other.getType();
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void update() {
         //everything here is subject to change
+        if (dX > 0.8) {
+            dX = 0.8;
+        } else if (dX < -0.8) {
+            dX = -0.8;
+        }
+        
+        if (dY < -1.1) {
+            dY = -1.1;
+        }
+        
         x += dX;
         y += dY;
 
@@ -99,7 +125,7 @@ public class GameCharacter {
     public void simpleJump() {
         if (state == State.GROUND) {
             state = State.AIR;
-            this.dY -= 0.25;
+            this.dY -= jumpHeight;
         }
     }
 
@@ -107,15 +133,32 @@ public class GameCharacter {
         if (state == State.GROUND) {
             if (charged) {
                 if (dir == KeyCode.UP) {
-                    this.dY = -chargeDelta - 0.25;
+                    if (chargeDelta > jumpHeight) {
+                        dY = -chargeDelta;
+                    } else {
+                        dY = -jumpHeight;
+                    }
+
                     state = State.AIR;
                 } else if (dir == KeyCode.RIGHT) {
-                    this.dY = -0.25;
-                    this.dX = chargeDelta;
+                    if (chargeDelta > jumpHeight) {
+                        dX = chargeDelta * 0.5;
+                        dY = -chargeDelta * 0.5;
+                    } else {
+                        dX = chargeDelta;
+                        dY = -jumpHeight;
+                    }
+
                     state = State.TURBO;
                 } else if (dir == KeyCode.LEFT) {
-                    this.dY = -0.25;
-                    this.dX = -chargeDelta;
+                    if (chargeDelta > jumpHeight) {
+                        dX = -chargeDelta * 0.5;
+                        dY = -chargeDelta * 0.5;
+                    } else {
+                        dX = -chargeDelta;
+                        dY = -jumpHeight;
+                    }
+
                     state = State.TURBO;
                 }
 
@@ -123,7 +166,7 @@ public class GameCharacter {
                 this.setColor(Color.BLUE);
             } else {
                 state = State.AIR;
-                this.dY -= 0.25;
+                dY -= jumpHeight;
             }
         }
     }

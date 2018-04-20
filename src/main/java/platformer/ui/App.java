@@ -36,6 +36,9 @@ public class App extends Application {
         GameUI gameUI = new GameUI(menuLogic, gameLogic, gameWindowX, gameWindowY);
         
         gameLogic.setGameUI(gameUI);
+        gameLogic.setup();
+        
+        gameUI.setCharacterPoly(gameLogic.getCharacter().getPoly());
 
         menuLogic.setMainScene(mainMenu.getScene());
         menuLogic.setOptionsScene(optionsMenu.getScene());

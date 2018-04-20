@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 
 public class GameUI {
 
@@ -46,6 +47,10 @@ public class GameUI {
         this.characterPoly = poly;
         gameDraw.getChildren().add(this.characterPoly);
     }
+    
+    public void addShape(Shape shape) {
+        gameDraw.getChildren().add(shape);
+    }
 
     private void setup() {
         logic.centerStage();
@@ -55,8 +60,6 @@ public class GameUI {
         Button goBack = new Button("return to main menu");
         
         gameDraw = new Pane();
-        characterPoly = gameLogic.getCharacter().getPoly();
-        this.setCharacterPoly(characterPoly);
 
         BorderPane gameLayout = new BorderPane();
         gameLayout.setCenter(gameDraw);

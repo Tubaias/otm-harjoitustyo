@@ -14,7 +14,7 @@ public class MenuLogic {
     public MenuLogic(Stage stage) {
         this.stage = stage;
     }
-
+    
     public void goToMain() {
         stage.setScene(mainScene);
     }

@@ -4,7 +4,9 @@ import platformer.domain.entity.GameCharacter;
 import java.util.HashMap;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import platformer.domain.entity.Platform;
 import platformer.ui.GameUI;
 
 public class GameLogic {
@@ -25,13 +27,15 @@ public class GameLogic {
         this.windowY = windowY;
 
         this.self = this;
-
-        this.setup();
     }
 
-    private void setup() {
+    public void setup() {
         character = new GameCharacter((double) windowX / 2, (double) windowY / 2);
         chargeCountdown = 0;
+        
+        Platform platform = new Platform(0, 0, 0, 10, 10, 1000, 0, 1000);
+        platform.setTranslateY(500d);
+        gameUI.addShape(platform.getPoly());
 
         animationTimer = new AnimationTimer() {
 
@@ -59,6 +63,10 @@ public class GameLogic {
                 }
 
                 if (activeKeys.getOrDefault(KeyCode.UP, false)) {
+                    if (character.isCharged()) {
+                        chargeCountdown = 0;
+                    }
+                    
                     if (activeKeys.getOrDefault(KeyCode.RIGHT, false) && activeKeys.getOrDefault(KeyCode.LEFT, false)) {
                         character.jump(KeyCode.UP);
                     } else if (activeKeys.getOrDefault(KeyCode.RIGHT, false)) {
