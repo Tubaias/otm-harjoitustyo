@@ -10,4 +10,5 @@
     <suppress files="platformer.ui.MainMenu.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.OptionsMenu.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.ExitMenu.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="platformer.ui.LevelSelect.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

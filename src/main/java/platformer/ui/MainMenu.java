@@ -47,6 +47,10 @@ public class MainMenu {
             logic.goToGame();
         });
         
+        levelSelectButton.setOnAction((ActionEvent event) -> {
+            logic.goToLevels();
+        });
+        
         optionsButton.setOnAction((ActionEvent event) -> {
             logic.goToOptions();
         });

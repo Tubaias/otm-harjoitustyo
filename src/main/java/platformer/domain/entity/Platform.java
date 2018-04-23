@@ -10,7 +10,8 @@ public class Platform {
     private Polygon poly;
     private Color color;
     
-    public Platform(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
+    public Platform(State type, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
+        this.type = type;
         this.poly = new Polygon(x1, y1, x2, y2, x3, y3, x4, y4);
         this.color = Color.BLACK;
         this.poly.setFill(color);

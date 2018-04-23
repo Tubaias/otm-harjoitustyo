@@ -34,15 +34,17 @@ public class App extends Application {
         OptionsMenu optionsMenu = new OptionsMenu(menuLogic, windowX, windowY);
         MainMenu mainMenu = new MainMenu(menuLogic, windowX, windowY);
         GameUI gameUI = new GameUI(menuLogic, gameLogic, gameWindowX, gameWindowY);
+        LevelSelect levelSelect = new LevelSelect(menuLogic, gameLogic, windowX, windowY);
         
         gameLogic.setGameUI(gameUI);
+        gameUI.setCharacterPoly(gameLogic.getCharacter().getPoly());
+        
         gameLogic.setup();
         
-        gameUI.setCharacterPoly(gameLogic.getCharacter().getPoly());
-
         menuLogic.setMainScene(mainMenu.getScene());
         menuLogic.setOptionsScene(optionsMenu.getScene());
         menuLogic.setGameUI(gameUI.getScene());
+        menuLogic.setLevelSelect(levelSelect.getScene());
 
         stage.setScene(mainMenu.getScene());
         stage.show();

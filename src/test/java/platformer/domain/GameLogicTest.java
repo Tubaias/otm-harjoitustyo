@@ -18,6 +18,7 @@ public class GameLogicTest {
     @Before
     public void setUp() {
         logic = new GameLogic(1280, 720);
+        logic.setup();
         
         keys = new HashMap<>();
         logic.setActiveKeys(keys);
@@ -32,15 +33,5 @@ public class GameLogicTest {
     @Test
     public void canGetActiveKeys() {
         assertEquals(0, logic.getActiveKeys().size());
-    }
-    
-    @Test
-    public void upMakesCharacterJump() {
-        GameCharacter character = logic.getCharacter();
-        Double dY = character.getDeltaY();
-     
-        keys.put(KeyCode.UP, true);
-        logic.getAnimationTimer().handle(0);
-        assertTrue(dY > character.getDeltaY());
     }
 }

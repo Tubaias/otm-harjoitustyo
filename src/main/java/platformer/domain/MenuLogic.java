@@ -5,11 +5,11 @@ import javafx.stage.Stage;
 import platformer.ui.ExitMenu;
 
 public class MenuLogic {
-
     private Stage stage;
     private Scene mainScene;
     private Scene optionsScene;
     private Scene gameUI;
+    private Scene levelSelect;
 
     public MenuLogic(Stage stage) {
         this.stage = stage;
@@ -25,6 +25,10 @@ public class MenuLogic {
 
     public void goToGame() {
         stage.setScene(gameUI);
+    }
+    
+    public void goToLevels() {
+        stage.setScene(levelSelect);
     }
 
     //placeholder implementation while I figure out how to make a popup window
@@ -60,6 +64,10 @@ public class MenuLogic {
 
     public void setGameUI(Scene gameUI) {
         this.gameUI = gameUI;
+    }
+    
+    public void setLevelSelect(Scene levelSelect) {
+        this.levelSelect = levelSelect;
     }
     
     public void setScene(Scene scene) {

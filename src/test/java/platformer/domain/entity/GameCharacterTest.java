@@ -52,12 +52,4 @@ public class GameCharacterTest {
         ch.moveDown();
         assertTrue(ch.getY() > y);
     }
-    
-    @Test
-    public void jumpDecreasesDeltaY() {
-        Double dY = ch.getDeltaY();
-        
-        ch.simpleJump();
-        assertTrue(ch.getDeltaY() < dY);
-    }
 }

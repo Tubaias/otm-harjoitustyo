@@ -51,6 +51,11 @@ public class GameUI {
     public void addShape(Shape shape) {
         gameDraw.getChildren().add(shape);
     }
+    
+    public void clear() {
+        this.gameDraw.getChildren().clear();
+        this.gameDraw.getChildren().add(this.characterPoly);
+    }
 
     private void setup() {
         logic.centerStage();

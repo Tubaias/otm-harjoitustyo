@@ -15,6 +15,7 @@ public class GameCharacter {
     private Double dY;
     private State state;
     private boolean charged;
+    private boolean collided;
     private Double chargeDelta;
     private Double jumpHeight;
 
@@ -29,8 +30,9 @@ public class GameCharacter {
         this.dY = 0d;
         this.chargeDelta = 0d;
 
-        this.state = State.GROUND;
+        this.state = State.AIR;
         this.charged = false;
+        this.collided = false;
         this.jumpHeight = 0.25;
     }
 
@@ -77,49 +79,61 @@ public class GameCharacter {
     public void setColor(Color color) {
         this.poly.setFill(color);
     }
-    
+
     public boolean collision(Platform other) {
         Polygon shape = other.getPoly();
-
         Shape intersection = Shape.intersect(this.poly, shape);
-        
+
         if (intersection.getBoundsInLocal().getWidth() != -1) {
+            collided = true;
             state = other.getType();
+
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public void update() {
         //everything here is subject to change
-        if (dX > 0.8) {
-            dX = 0.8;
-        } else if (dX < -0.8) {
-            dX = -0.8;
+        if (state == State.GROUND) {
+            if (collided) {
+                collided = false;
+                this.chargeUp();
+            }
+
+            dY = 0.0;
         }
-        
-        if (dY < -1.1) {
-            dY = -1.1;
+
+        if (dX > 1.0) {
+            dX = 1.0;
+        } else if (dX < -1.0) {
+            dX = -1.0;
         }
-        
+
+        if (dY < -1.3) {
+            dY = -1.3;
+        }
+
         x += dX;
         y += dY;
 
-        if (y > 500) {
+        if (y > 710) {
             if (state != State.GROUND) {
                 this.chargeUp();
             }
 
-            y = 500.0;
+            y = 710.0;
             dY = 0.0;
-            this.resetJump();
+            state = State.GROUND;
         }
 
         poly.setTranslateX(x);
         poly.setTranslateY(y);
 
-        dY += 0.0015;
+        if (state == State.AIR || state == State.TURBO) {
+            dY += 0.0015;
+        }
     }
 
     public void simpleJump() {
@@ -130,49 +144,59 @@ public class GameCharacter {
     }
 
     public void jump(KeyCode dir) {
-        if (state == State.GROUND) {
-            if (charged) {
-                if (dir == KeyCode.UP) {
-                    if (chargeDelta > jumpHeight) {
-                        dY = -chargeDelta;
-                    } else {
-                        dY = -jumpHeight;
-                    }
+        if (state != State.GROUND) {
+            return;
+        }
 
-                    state = State.AIR;
-                } else if (dir == KeyCode.RIGHT) {
-                    if (chargeDelta > jumpHeight) {
-                        dX = chargeDelta * 0.5;
-                        dY = -chargeDelta * 0.5;
-                    } else {
-                        dX = chargeDelta;
-                        dY = -jumpHeight;
-                    }
-
-                    state = State.TURBO;
-                } else if (dir == KeyCode.LEFT) {
-                    if (chargeDelta > jumpHeight) {
-                        dX = -chargeDelta * 0.5;
-                        dY = -chargeDelta * 0.5;
-                    } else {
-                        dX = -chargeDelta;
-                        dY = -jumpHeight;
-                    }
-
-                    state = State.TURBO;
-                }
-
-                this.unCharge();
-                this.setColor(Color.BLUE);
-            } else {
-                state = State.AIR;
-                dY -= jumpHeight;
+        if (charged) {
+            if (dir == KeyCode.UP) {
+                this.jumpUp();
+            } else if (dir == KeyCode.RIGHT) {
+                this.jumpRight();
+            } else if (dir == KeyCode.LEFT) {
+                this.jumpLeft();
             }
+
+            this.unCharge();
+            this.setColor(Color.BLUE);
+        } else {
+            state = State.AIR;
+            dY -= jumpHeight;
         }
     }
 
-    public void resetJump() {
-        state = State.GROUND;
+    private void jumpUp() {
+        if (chargeDelta > jumpHeight) {
+            dY = -chargeDelta;
+        } else {
+            dY = -jumpHeight;
+        }
+
+        state = State.AIR;
+    }
+
+    private void jumpRight() {
+        if (chargeDelta > jumpHeight) {
+            dX = chargeDelta * 0.5;
+            dY = -chargeDelta * 0.5;
+        } else {
+            dX = chargeDelta;
+            dY = -jumpHeight;
+        }
+
+        state = State.TURBO;
+    }
+
+    private void jumpLeft() {
+        if (chargeDelta > jumpHeight) {
+            dX = -chargeDelta * 0.5;
+            dY = -chargeDelta * 0.5;
+        } else {
+            dX = -chargeDelta;
+            dY = -jumpHeight;
+        }
+
+        state = State.TURBO;
     }
 
     public void stopOnGround() {
