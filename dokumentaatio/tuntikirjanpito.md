@@ -11,4 +11,5 @@
 | 17.4. | 4    | Sekalaista refaktorointia, pelilogiikan luontia ja testien kirjoittamista |
 | 18.4. | 3    | Pelilogiikan monimutkaistamista |
 | 20.4. | 4    | Lisää pelilogiikkaa |
-| yht   | 22    | | 
+| 23.4. | 4    | Tasot ja tasonvalintaruutu, platformit, alustava törmäyksentarkastus ja sekalaista repositorion päivittämistä |
+| yht   | 26    | | 
