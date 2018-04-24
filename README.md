@@ -7,6 +7,10 @@ Ohjelmistotekniikan menetelmät -kurssia varten toteutettava harjoitustyö. Ohje
 
 [Työaikakirjanpito](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+## Releaset
+
+[Viikko 5](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/viikko5)
+
 ## Tämänhetkinen toiminnallisuus
 Ohjelmassa on päävalikko, tasonvalintaruutu, asetusvalikko, ja peliruutu, jossa on 'pelaajahahmo' ja nappi pääruutuun palaamista varten. Ohjelmassa voi siirtyä taaksepäin Esc-näppäimellä ja peliruudussa hahmoa voi ohjata nuolinäppäimillä.
 
