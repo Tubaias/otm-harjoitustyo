@@ -33,10 +33,10 @@ Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/ja
 Komento
 
 ```
-mvn package
+mvn clean compile assembly:single
 ```
 
-generoi hakemistoon _target_ suoritettavan jar-tiedoston _OtmTodoApp-1.0-SNAPSHOT.jar_
+generoi hakemistoon _target_ suoritettavan jar-tiedoston _otm-platformer-Viikko 5-jar-with-dependencies.jar_
 
 ### Checkstyle
 
