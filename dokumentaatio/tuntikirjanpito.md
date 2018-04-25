@@ -12,4 +12,6 @@
 | 18.4. | 3    | Pelilogiikan monimutkaistamista |
 | 20.4. | 4    | Lisää pelilogiikkaa |
 | 23.4. | 4    | Tasot ja tasonvalintaruutu, platformit, alustava törmäyksentarkastus ja sekalaista repositorion päivittämistä |
-| yht   | 26    | | 
+| 24.4. | 1    | uusi maven plugin ja viikko 5 release jar |
+| 25.4. | 2    | Törmäyksentarkastuskoodin parantamista |
+| yht   | 29    | | 
