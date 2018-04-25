@@ -28,15 +28,12 @@ public class GameLogic {
         this.windowX = windowX;
         this.windowY = windowY;
 
-        character = new GameCharacter((double) windowX / 10, (double) windowY * 0.8);
+        character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
     }
 
     public void setup() {
         chargeCountdown = 0;
 
-//        StageDebug testStage = new StageDebug((double) windowX, (double) windowY);
-//        Stage1 stage1 = new Stage1((double) windowX, (double) windowY);
-//        this.loadStage(StageNo.DEBUG);
         animationTimer = new AnimationTimer() {
 
             @Override
@@ -93,7 +90,7 @@ public class GameLogic {
 
                 if (activeKeys.getOrDefault(KeyCode.R, false)) {
                     activeKeys.put(KeyCode.R, false);
-                    character = new GameCharacter((double) windowX / 10, (double) windowY * 0.8);
+                    character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
                     gameUI.setCharacterPoly(character.getPoly());
                     chargeCountdown = 0;
                 }
@@ -101,10 +98,21 @@ public class GameLogic {
                 character.update();
 
                 if (currentStage != null) {
+                    boolean fallAgain = true;
+                    
                     for (Platform p : currentStage.getPlatforms()) {
                         if (character.collision(p)) {
-                            p.toggleColor();
+                            if (character.getState() == State.AIR) {
+                                character.chargeUp();
+                            }
+                            
+                            character.setState(p.getType());
+                            fallAgain = false;
                         }
+                    }
+                    
+                    if (fallAgain && character.getState() != State.AIR) {
+                        character.setState(State.AIR);
                     }
                 }
             }
@@ -116,17 +124,17 @@ public class GameLogic {
     public void loadStage(StageNo number) {
         gameUI.clear();
 
-        GameStage stage;
+        GameStage gStage;
 
         if (number == StageNo.ONE) {
-            stage = new Stage1((double) windowX, (double) windowY);
+            gStage = new Stage1((double) windowX, (double) windowY);
         } else {
-            stage = new StageDebug((double) windowX, (double) windowY);
+            gStage = new StageDebug((double) windowX, (double) windowY);
         }
         
-        currentStage = stage;
+        currentStage = gStage;
 
-        for (Platform p : stage.getPlatforms()) {
+        for (Platform p : gStage.getPlatforms()) {
             gameUI.addShape(p.getPoly());
         }
     }
