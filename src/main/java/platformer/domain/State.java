@@ -2,5 +2,5 @@
 package platformer.domain;
 
 public enum State {
-    GROUND, AIR, WALL
+    GROUND, AIR, LEFTWALL, RIGHTWALL 
 }

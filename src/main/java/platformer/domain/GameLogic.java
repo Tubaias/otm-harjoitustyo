@@ -23,10 +23,13 @@ public class GameLogic {
     private AnimationTimer animationTimer;
     private long chargeCountdown;
     private GameStage currentStage;
+    private Platform lastCollision;
 
     public GameLogic(int windowX, int windowY) {
         this.windowX = windowX;
         this.windowY = windowY;
+
+        lastCollision = new Platform(State.AIR, 0, 0, 0, 0, 0, 0, 0, 0);
 
         character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
     }
@@ -38,10 +41,17 @@ public class GameLogic {
 
             @Override
             public void handle(long now) {
+                if (character.getX() > windowX + 20 
+                        || character.getX() < -20
+                        || character.getY() > windowY + 20
+                        || character.getY() < -20) {
+                    resetCharacter();
+                }
+                
                 if (character.isCharged()) {
                     if (chargeCountdown == 0) {
                         chargeCountdown = now;
-                    } else if (now - chargeCountdown > 300000000) {
+                    } else if (now - chargeCountdown > 300_000_000) {
                         character.unCharge();
                         chargeCountdown = 0;
                     }
@@ -90,28 +100,33 @@ public class GameLogic {
 
                 if (activeKeys.getOrDefault(KeyCode.R, false)) {
                     activeKeys.put(KeyCode.R, false);
-                    character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
-                    gameUI.setCharacterPoly(character.getPoly());
-                    chargeCountdown = 0;
+                    resetCharacter();
                 }
 
                 character.update();
 
                 if (currentStage != null) {
                     boolean fallAgain = true;
-                    
+
                     for (Platform p : currentStage.getPlatforms()) {
                         if (character.collision(p)) {
-                            if (character.getState() == State.AIR) {
+                            if ((character.getState() == State.AIR
+                                    && !((p.getType() == State.LEFTWALL || p.getType() == State.RIGHTWALL)
+                                    && lastCollision == p))
+                                    && p.getType() != State.AIR) {
                                 character.chargeUp();
                             }
-                            
+
                             character.setState(p.getType());
+
+                            lastCollision = p;
                             fallAgain = false;
                         }
                     }
-                    
-                    if (fallAgain && character.getState() != State.AIR) {
+
+                    if (fallAgain && character.getState() == State.GROUND) {
+                        character.setState(State.AIR);
+                    } else if (fallAgain && !character.isCharged() && (character.getState() == State.LEFTWALL || character.getState() == State.RIGHTWALL)) {
                         character.setState(State.AIR);
                     }
                 }
@@ -131,12 +146,18 @@ public class GameLogic {
         } else {
             gStage = new StageDebug((double) windowX, (double) windowY);
         }
-        
+
         currentStage = gStage;
 
         for (Platform p : gStage.getPlatforms()) {
             gameUI.addShape(p.getPoly());
         }
+    }
+
+    public void resetCharacter() {
+        character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
+        gameUI.setCharacterPoly(character.getPoly());
+        chargeCountdown = 0;
     }
 
     public GameCharacter getCharacter() {

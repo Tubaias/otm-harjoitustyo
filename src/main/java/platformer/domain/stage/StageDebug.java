@@ -9,25 +9,29 @@ public class StageDebug extends GameStage {
     public StageDebug(Double windowX, Double windowY) {
         super(windowX, windowY);
         
-        this.setup();
+        this.setupGround();
+        this.setupBounds();
     }
     
-    private void setup() {
-        Platform plat1 = new Platform(State.GROUND, 0, 0, 50, 0, 50, 50, 0, 50);
-        Platform plat2 = new Platform(State.GROUND, 100, 100, 150, 100, 150, 150, 100, 150);
-        Platform plat3 = new Platform(State.GROUND, -100, -100, -150, -100, -150, -150, -100, -150);
+    private void setupGround() {
+        Platform ground = new Platform(State.GROUND, 0, 0, windowX.intValue(), 0, windowX.intValue(), 1, 0, 1);
         
-        plat1.setTranslateX(windowX / 2);
-        plat1.setTranslateY(windowY / 2);
+        ground.setTranslateY(windowY - 1);
         
-        plat2.setTranslateX(windowX / 2);
-        plat2.setTranslateY(windowY / 2);
+        platforms.add(ground);
+    }
+    
+    private void setupBounds() {
+        Platform leftBound = new Platform(State.RIGHTWALL, 0, 0, 1, 0, 1, windowY.intValue(), 0, windowY.intValue());
+        Platform rightBound = new Platform(State.LEFTWALL, 0, 0, 1, 0, 1, windowY.intValue(), 0, windowY.intValue());
+        Platform ceiling = new Platform(State.AIR, 0, 0, windowX.intValue(), 0, windowX.intValue(), 1, 0, 1);
         
-        plat3.setTranslateX(windowX / 2);
-        plat3.setTranslateY(windowY / 2);
+        leftBound.setTranslateX(-1.0);
         
-        platforms.add(plat1);
-        platforms.add(plat2);
-        platforms.add(plat3);
+        rightBound.setTranslateX(windowX);
+        
+        platforms.add(leftBound);
+        platforms.add(rightBound);
+        platforms.add(ceiling);
     }
 }

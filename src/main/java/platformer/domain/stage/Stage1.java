@@ -9,35 +9,51 @@ public class Stage1 extends GameStage {
     public Stage1(Double windowX, Double windowY) {
         super(windowX, windowY);
         
-        this.setup();
+        this.setupGround();
+        this.setupWalls();
+        this.setupCorners();
     }
     
-    private void setup() {
-        Platform plat1 = new Platform(State.GROUND, 0, 0, 200, 0, 200, 500, 0, 500);
-        Platform plat2 = new Platform(State.GROUND, 0, 0, 200, 0, 200, 500, 0, 500);
-        
-        Platform ground = new Platform(State.GROUND, 0, 0, windowX.intValue(), 0, windowX.intValue(), 1, 0, 1);
-        
-        Platform plat1rightWall = new Platform(State.WALL, 0, 0, 1, 0, 1, 500, 0, 500);
-        Platform plat2leftWall = new Platform(State.WALL, 0, 0, 1, 0, 1, 500, 0, 500);
-        
+    private void setupGround() {
+        Platform plat1 = new Platform(State.GROUND, 0, 0, 200, 0, 200, 250, 0, 250);
+        Platform plat2 = new Platform(State.GROUND, 0, 0, 200, 0, 200, 250, 0, 250);;
+
         plat1.setTranslateY(windowY * 0.8);
         
         plat2.setTranslateX(windowX - 200);
         plat2.setTranslateY(windowY * 0.8);
-        
-        ground.setTranslateY(windowY - 1);
+
+        platforms.add(plat1);
+        platforms.add(plat2);   
+    }
+    
+    private void setupWalls() {
+        Platform plat1rightWall = new Platform(State.RIGHTWALL, 0, 0, 1, 0, 1, 250, 0, 250);
+        Platform plat2leftWall = new Platform(State.LEFTWALL, 0, 0, 1, 0, 1, 250, 0, 250);
         
         plat1rightWall.setTranslateX(200.0);
-        plat1rightWall.setTranslateY(windowY * 0.8);
+        plat1rightWall.setTranslateY(windowY * 0.8 + 1);
         
         plat2leftWall.setTranslateX(windowX - 201);
-        plat2leftWall.setTranslateY(windowY * 0.8);
+        plat2leftWall.setTranslateY(windowY * 0.8 + 1);
         
-        platforms.add(plat1);
-        platforms.add(plat2);
-        platforms.add(ground);
         platforms.add(plat1rightWall);
         platforms.add(plat2leftWall);
     }
+    
+    private void setupCorners() {
+        Platform plat1rightCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat2leftCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
+        
+        plat1rightCorner.setTranslateX(200.0);
+        plat1rightCorner.setTranslateY(windowY * 0.8);
+        
+        plat2leftCorner.setTranslateX(windowX - 201);
+        plat2leftCorner.setTranslateY(windowY * 0.8);
+        
+        platforms.add(plat1rightCorner);
+        platforms.add(plat2leftCorner);
+    }
+    
+    
 }

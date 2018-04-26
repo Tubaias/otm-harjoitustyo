@@ -52,9 +52,13 @@ public class GameUI {
         gameDraw.getChildren().add(shape);
     }
     
+    public void removeShape(Shape shape) {
+        gameDraw.getChildren().remove(shape);
+    }
+    
     public void clear() {
-        this.gameDraw.getChildren().clear();
-        this.gameDraw.getChildren().add(this.characterPoly);
+        gameDraw.getChildren().clear();
+        gameDraw.getChildren().add(characterPoly);
     }
 
     private void setup() {

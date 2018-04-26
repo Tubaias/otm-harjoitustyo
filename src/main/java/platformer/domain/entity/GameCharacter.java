@@ -3,22 +3,26 @@ package platformer.domain.entity;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
 import platformer.domain.State;
 
 public class GameCharacter {
 
     private Polygon poly;
-    private Double x;
-    private Double y;
-    private Double dX;
-    private Double dY;
+    private Polyline ghost;
+    private double x;
+    private double y;
+    private double dX;
+    private double dY;
     private State state;
     private boolean charged;
-    private Double chargeDelta;
-    private Double jumpHeight;
+    private double chargeDelta;
+    private double jumpHeight;
+    private boolean canMoveLeft;
+    private boolean canMoveRight;
 
-    public GameCharacter(Double translateX, Double translateY) {
+    public GameCharacter(double translateX, double translateY) {
         poly = new Polygon(0, 0, 10, 0, 10, 10, 0, 10);
         poly.setTranslateX(translateX);
         poly.setTranslateY(translateY);
@@ -31,26 +35,33 @@ public class GameCharacter {
 
         this.state = State.AIR;
         this.charged = false;
-        this.jumpHeight = 0.25;
+        this.canMoveLeft = true;
+        this.canMoveRight = true;
+        
+        this.jumpHeight = 0.35;
     }
 
     public Polygon getPoly() {
         return this.poly;
     }
+    
+    public Polyline getGhost() {
+        return this.ghost;
+    }
 
-    public Double getX() {
+    public double getX() {
         return this.x;
     }
 
-    public Double getY() {
+    public double getY() {
         return this.y;
     }
 
-    public Double getDeltaX() {
+    public double getDeltaX() {
         return this.dX;
     }
 
-    public Double getDeltaY() {
+    public double getDeltaY() {
         return this.dY;
     }
 
@@ -68,7 +79,7 @@ public class GameCharacter {
         }
         
         charged = true;
-        chargeDelta = (Math.abs(dX) + Math.abs(dY)) * 1.15;
+        chargeDelta = (Math.abs(dX) + Math.abs(dY)) * 1.20;
         this.setColor(Color.RED);
     }
 
@@ -89,8 +100,18 @@ public class GameCharacter {
     public boolean collision(Platform plat) {
         Polygon shape = plat.getPoly();
         Shape intersection = Shape.intersect(this.poly, shape);
+        Shape ghostIntersection = Shape.intersect(this.ghost, shape);
 
-        if (intersection.getBoundsInLocal().getWidth() != -1) {
+        if (intersection.getBoundsInLocal().getWidth() != -1 || ghostIntersection.getBoundsInLocal().getWidth() != -1) {
+            if (plat.getType() == State.RIGHTWALL) {
+                x++;
+            } else if (plat.getType() == State.LEFTWALL) {
+                x--;
+            } else if (plat.getType() == State.AIR) {
+                dY = 0.0;
+                y++;
+            }
+            
             return true;
         }
 
@@ -98,38 +119,52 @@ public class GameCharacter {
     }
 
     public void update() {
-        //everything here is subject to change
-        if (state != State.AIR) {
+        double oldX = x;
+        double oldY = y;
+        
+        //prevent movement if neccessary
+        if (state == State.GROUND) {
             dY = 0.0;
+        } else if (state == State.LEFTWALL) {
+            if (charged) {
+                dX = 0.0;
+                dY = 0.0;
+            } else if (dX > 0) {
+                dX = 0.0;
+            }
+        } else if (state == State.RIGHTWALL) {
+            if (charged) {
+                dX = 0.0;
+                dY = 0.0;
+            } else if (dX < 0) {
+                dX = 0.0;
+            }
         }
 
+        //cap dX
         if (dX > 1.0) {
             dX = 1.0;
         } else if (dX < -1.0) {
             dX = -1.0;
         }
 
+        //cap dY
         if (dY < -1.3) {
             dY = -1.3;
         }
 
+        //move
         x += dX;
         y += dY;
-
-        if (y > 710) {
-            if (state != State.GROUND) {
-                this.chargeUp();
-            }
-
-            y = 710.0;
-            dY = 0.0;
-            state = State.GROUND;
-        }
-
+        
         poly.setTranslateX(x);
         poly.setTranslateY(y);
+        
+        //update ghost for collisions
+        ghost = new Polyline(oldX + 5, oldY + 5, x + 5, y + 5);
 
-        if (state == State.AIR) {
+        //apply gravity
+        if (state != State.GROUND) {
             dY += 0.0015;
         }
     }
@@ -142,16 +177,22 @@ public class GameCharacter {
     }
 
     public void jump(KeyCode dir) {
-        if (state == State.AIR) {
+        if (state == State.AIR || (!charged && (state == State.RIGHTWALL || state == State.LEFTWALL))) {
             return;
+        }
+        
+        if (state == State.RIGHTWALL) {
+            canMoveLeft = false;
+        } else if (state == State.LEFTWALL) {
+            canMoveRight = false;
         }
 
         if (charged) {
             if (dir == KeyCode.UP) {
                 this.jumpUp();
-            } else if (dir == KeyCode.RIGHT) {
+            } else if (dir == KeyCode.RIGHT && canMoveRight) {
                 this.jumpRight();
-            } else if (dir == KeyCode.LEFT) {
+            } else if (dir == KeyCode.LEFT && canMoveLeft) {
                 this.jumpLeft();
             }
 
@@ -197,12 +238,24 @@ public class GameCharacter {
     }
 
     public void moveRight() {
+        if (!canMoveRight) {
+            return;
+        }
+        
+        canMoveLeft = true;
+        
         if (dX < 0.15) {
             dX += 0.005;
         }
     }
 
     public void moveLeft() {
+        if (!canMoveLeft) {
+            return;
+        }
+        
+        canMoveRight = true;
+        
         if (dX > -0.15) {
             dX -= 0.005;
         }
