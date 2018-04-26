@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import platformer.domain.entity.EndPoint;
 import platformer.domain.entity.Platform;
 import platformer.domain.stage.GameStage;
 import platformer.domain.stage.Stage1;
@@ -151,6 +152,12 @@ public class GameLogic {
 
         for (Platform p : gStage.getPlatforms()) {
             gameUI.addShape(p.getPoly());
+        }
+        
+        EndPoint goal = gStage.getEndPoint();
+        
+        if (goal != null) {
+            gameUI.addShape(goal.getPoly());
         }
     }
 

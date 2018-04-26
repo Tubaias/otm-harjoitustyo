@@ -2,6 +2,7 @@
 package platformer.domain.stage;
 
 import platformer.domain.State;
+import platformer.domain.entity.EndPoint;
 import platformer.domain.entity.Platform;
 
 public class Stage1 extends GameStage {
@@ -12,6 +13,7 @@ public class Stage1 extends GameStage {
         this.setupGround();
         this.setupWalls();
         this.setupCorners();
+        this.setupEntities();
     }
     
     private void setupGround() {
@@ -55,5 +57,10 @@ public class Stage1 extends GameStage {
         platforms.add(plat2leftCorner);
     }
     
-    
+    private void setupEntities() {
+        goal = new EndPoint(0, 0, 20, 0, 20, 20, 0, 20);
+        
+        goal.setTranslateX(windowX - 100);
+        goal.setTranslateY(windowY * 0.8 - 100);
+    }
 }

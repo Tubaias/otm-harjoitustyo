@@ -3,26 +3,17 @@ package platformer.domain.entity;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import platformer.domain.State;
 
-public class Platform {
-    private State type;
+public class EndPoint {
     private Polygon poly;
-    private Color color;
-    
-    public Platform(State type, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
-        this.type = type;
+
+    public EndPoint(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
         this.poly = new Polygon(x1, y1, x2, y2, x3, y3, x4, y4);
-        this.color = Color.BLACK;
-        this.poly.setFill(color);
+        this.poly.setFill(Color.ORANGE);
     }
     
     public Polygon getPoly() {
         return this.poly;
-    }
-    
-    public State getType() {
-        return this.type;
     }
     
     public void setTranslateX(Double translate) {
