@@ -14,4 +14,5 @@
 | 23.4. | 4    | Tasot ja tasonvalintaruutu, platformit, alustava törmäyksentarkastus ja sekalaista repositorion päivittämistä |
 | 24.4. | 1    | jarin generointiin liittyvää tutkimista, uusi maven plugin ja viikko 5 release jar |
 | 25.4. | 2    | Törmäyksentarkastuskoodin parantamista |
-| yht   | 29    | | 
+| 26.4. | 6    | Lopullinen törmäyksentarkastuskoodi ja hieman pelilogiikan muutoksia |
+| yht   | 35    | | 
