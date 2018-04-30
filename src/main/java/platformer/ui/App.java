@@ -41,7 +41,7 @@ public class App extends Application {
         
         gameLogic.setup();
         
-        menuLogic.setMainScene(mainMenu.getScene());
+        menuLogic.setMainMenu(mainMenu);
         menuLogic.setOptionsScene(optionsMenu.getScene());
         menuLogic.setGameUI(gameUI.getScene());
         menuLogic.setLevelSelect(levelSelect.getScene());

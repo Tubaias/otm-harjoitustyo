@@ -3,20 +3,24 @@ package platformer.domain;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import platformer.ui.ExitMenu;
+import platformer.ui.MainMenu;
+import platformer.ui.NameMenu;
 
 public class MenuLogic {
     private Stage stage;
-    private Scene mainScene;
+    private MainMenu mainMenu;
     private Scene optionsScene;
     private Scene gameUI;
     private Scene levelSelect;
+    private String username;
 
     public MenuLogic(Stage stage) {
         this.stage = stage;
+        this.username = "ASD";
     }
     
     public void goToMain() {
-        stage.setScene(mainScene);
+        stage.setScene(mainMenu.getScene());
     }
 
     public void goToOptions() {
@@ -31,17 +35,21 @@ public class MenuLogic {
         stage.setScene(levelSelect);
     }
 
-    //placeholder implementation while I figure out how to make a popup window
     public void exitDialog() {
         ExitMenu exitMenu = new ExitMenu(stage.getScene(), this);
         stage.setScene(exitMenu.getScene());
+    }
+    
+    public void nameChangeDialog() {
+        NameMenu nameMenu = new NameMenu(stage.getScene(), this);
+        stage.setScene(nameMenu.getScene());
     }
     
     public void quit() {
         stage.close();
     }
 
-    //does not work yet
+    //does not work for reasons???
     public void toggleFullscreen() {
         if (stage.isFullScreen()) {
             stage.setFullScreen(false);
@@ -53,9 +61,18 @@ public class MenuLogic {
 
         System.out.println(stage.isFullScreen());
     }
+    
+    public void setUsername(String name) {
+        username = name.substring(0, 3).toUpperCase();
+        mainMenu.updateName();
+    }
+    
+    public String getUsername() {
+        return this.username;
+    }
 
-    public void setMainScene(Scene mainScene) {
-        this.mainScene = mainScene;
+    public void setMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
     }
 
     public void setOptionsScene(Scene optionsScene) {

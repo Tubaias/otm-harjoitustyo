@@ -15,6 +15,7 @@ public class MainMenu {
     private Scene scene;
     private int windowX;
     private int windowY;
+    private Label nameLabel;
     
     public MainMenu(MenuLogic logic, int windowX, int windowY) {
         this.logic = logic;
@@ -28,14 +29,21 @@ public class MainMenu {
         return this.scene;
     }
     
+    public void updateName() {
+        nameLabel.setText("username: " + logic.getUsername());
+    }
+    
     private void setup() {
         VBox mainLayout = new VBox();
-        mainLayout.setSpacing(30);
+        mainLayout.setSpacing(25);
         mainLayout.setAlignment(Pos.CENTER);
         
         this.scene = new Scene(mainLayout, windowX, windowY);
         
+        nameLabel = new Label("username: " + logic.getUsername());
+        
         mainLayout.getChildren().add(new Label("SUPER PLATFORMER EXTREME 6000"));
+        mainLayout.getChildren().add(nameLabel);
         
         Button startButton = new Button("Start game");
         Button levelSelectButton = new Button("Level select");

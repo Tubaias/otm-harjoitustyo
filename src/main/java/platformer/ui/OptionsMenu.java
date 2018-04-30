@@ -44,12 +44,19 @@ public class OptionsMenu {
         Button fullscreenButton = new Button("Toggle fullscreen mode");
         options.getChildren().add(fullscreenButton);
         
+        Button changeNameButton = new Button("Change your username");
+        options.getChildren().add(changeNameButton);
+        
         for (int i = 1; i < 16; i++) {
             options.getChildren().add(new Button("Placeholder " + i));
         }
         
         fullscreenButton.setOnAction((event) -> {
             logic.toggleFullscreen();
+        });
+        
+        changeNameButton.setOnAction((event) -> {
+            logic.nameChangeDialog();
         });
         
         scene.setOnKeyPressed(event -> {
