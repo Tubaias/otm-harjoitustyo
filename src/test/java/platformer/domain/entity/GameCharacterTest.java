@@ -36,20 +36,4 @@ public class GameCharacterTest {
         ch.moveLeft();
         assertTrue(ch.getDeltaX() < dX);
     }
-    
-    @Test
-    public void moveUpDecreasesY() {
-        Double y = ch.getY();
-        
-        ch.moveUp(1);
-        assertTrue(ch.getY() < y);
-    }
-    
-    @Test
-    public void moveDownIncreasesY() {
-        Double y = ch.getY();
-        
-        ch.moveDown();
-        assertTrue(ch.getY() > y);
-    }
 }

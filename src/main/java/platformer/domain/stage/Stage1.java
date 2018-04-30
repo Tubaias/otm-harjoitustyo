@@ -2,6 +2,7 @@
 package platformer.domain.stage;
 
 import platformer.domain.State;
+import platformer.domain.entity.Coin;
 import platformer.domain.entity.EndPoint;
 import platformer.domain.entity.Platform;
 
@@ -57,10 +58,15 @@ public class Stage1 extends GameStage {
         platforms.add(plat2leftCorner);
     }
     
-    private void setupEntities() {
+    @Override
+    public void setupEntities() {
         goal = new EndPoint(0, 0, 20, 0, 20, 20, 0, 20);
         
         goal.setTranslateX(windowX - 100);
         goal.setTranslateY(windowY * 0.8 - 100);
+        
+        Coin coin1 = new Coin(windowX / 2, windowY / 2 - 50);
+        
+        coins.add(coin1);
     }
 }

@@ -37,14 +37,14 @@ public class GameCharacter {
         this.charged = false;
         this.canMoveLeft = true;
         this.canMoveRight = true;
-        
+
         this.jumpHeight = 0.35;
     }
 
     public Polygon getPoly() {
         return this.poly;
     }
-    
+
     public Polyline getGhost() {
         return this.ghost;
     }
@@ -77,7 +77,7 @@ public class GameCharacter {
         if (charged) {
             return;
         }
-        
+
         charged = true;
         chargeDelta = (Math.abs(dX) + Math.abs(dY)) * 1.20;
         this.setColor(Color.RED);
@@ -92,7 +92,7 @@ public class GameCharacter {
     public void setColor(Color color) {
         this.poly.setFill(color);
     }
-    
+
     public void setState(State state) {
         this.state = state;
     }
@@ -111,7 +111,31 @@ public class GameCharacter {
                 dY = 0.0;
                 y++;
             }
-            
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean coinCollision(Coin coin) {
+        Shape shape = coin.getShape();
+        Shape intersection = Shape.intersect(this.poly, shape);
+        Shape ghostIntersection = Shape.intersect(this.ghost, shape);
+
+        if (intersection.getBoundsInLocal().getWidth() != -1 || ghostIntersection.getBoundsInLocal().getWidth() != -1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean goalCollision(EndPoint goal) {
+        Shape shape = goal.getPoly();
+        Shape intersection = Shape.intersect(this.poly, shape);
+        Shape ghostIntersection = Shape.intersect(this.ghost, shape);
+
+        if (intersection.getBoundsInLocal().getWidth() != -1 || ghostIntersection.getBoundsInLocal().getWidth() != -1) {
             return true;
         }
 
@@ -121,8 +145,24 @@ public class GameCharacter {
     public void update() {
         double oldX = x;
         double oldY = y;
-        
-        //prevent movement if neccessary
+
+        checkMovementBlocks();
+        capDeltas();
+
+        x += dX;
+        y += dY;
+
+        poly.setTranslateX(x);
+        poly.setTranslateY(y);
+
+        ghost = new Polyline(oldX + 5, oldY + 5, x + 5, y + 5);
+
+        if (state != State.GROUND) {
+            dY += 0.0015;
+        }
+    }
+
+    private void checkMovementBlocks() {
         if (state == State.GROUND) {
             dY = 0.0;
         } else if (state == State.LEFTWALL) {
@@ -140,32 +180,17 @@ public class GameCharacter {
                 dX = 0.0;
             }
         }
+    }
 
-        //cap dX
+    private void capDeltas() {
         if (dX > 1.0) {
             dX = 1.0;
         } else if (dX < -1.0) {
             dX = -1.0;
         }
 
-        //cap dY
         if (dY < -1.3) {
             dY = -1.3;
-        }
-
-        //move
-        x += dX;
-        y += dY;
-        
-        poly.setTranslateX(x);
-        poly.setTranslateY(y);
-        
-        //update ghost for collisions
-        ghost = new Polyline(oldX + 5, oldY + 5, x + 5, y + 5);
-
-        //apply gravity
-        if (state != State.GROUND) {
-            dY += 0.0015;
         }
     }
 
@@ -180,7 +205,7 @@ public class GameCharacter {
         if (state == State.AIR || (!charged && (state == State.RIGHTWALL || state == State.LEFTWALL))) {
             return;
         }
-        
+
         if (state == State.RIGHTWALL) {
             canMoveLeft = false;
         } else if (state == State.LEFTWALL) {
@@ -188,21 +213,25 @@ public class GameCharacter {
         }
 
         if (charged) {
-            if (dir == KeyCode.UP) {
-                this.jumpUp();
-            } else if (dir == KeyCode.RIGHT && canMoveRight) {
-                this.jumpRight();
-            } else if (dir == KeyCode.LEFT && canMoveLeft) {
-                this.jumpLeft();
-            }
-
-            this.unCharge();
-            this.setColor(Color.BLUE);
+            chargedJump(dir);
         } else {
             dY -= jumpHeight;
         }
-        
+
         state = State.AIR;
+    }
+
+    private void chargedJump(KeyCode dir) {
+        if (dir == KeyCode.UP) {
+            this.jumpUp();
+        } else if (dir == KeyCode.RIGHT && canMoveRight) {
+            this.jumpRight();
+        } else if (dir == KeyCode.LEFT && canMoveLeft) {
+            this.jumpLeft();
+        }
+
+        this.unCharge();
+        this.setColor(Color.BLUE);
     }
 
     private void jumpUp() {
@@ -241,9 +270,9 @@ public class GameCharacter {
         if (!canMoveRight) {
             return;
         }
-        
+
         canMoveLeft = true;
-        
+
         if (dX < 0.15) {
             dX += 0.005;
         }
@@ -253,22 +282,12 @@ public class GameCharacter {
         if (!canMoveLeft) {
             return;
         }
-        
+
         canMoveRight = true;
-        
+
         if (dX > -0.15) {
             dX -= 0.005;
         }
-    }
-
-    public void moveUp(int distance) {
-        y -= distance;
-        poly.setTranslateY(poly.getTranslateY() - distance);
-    }
-
-    public void moveDown() {
-        y += 0.5;
-        poly.setTranslateY(poly.getTranslateY() + 0.5);
     }
 
     @Override
