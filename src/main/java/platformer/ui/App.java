@@ -5,12 +5,19 @@ import platformer.domain.MenuLogic;
 import javafx.application.Application;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import platformer.dao.Database;
 
 public class App extends Application {
     private int windowX;
     private int windowY;
     private int gameWindowX;
     private int gameWindowY;
+    private MenuLogic menuLogic;
+    private GameLogic gameLogic;
+    private MainMenu mainMenu;
+    private OptionsMenu optionsMenu;
+    private GameUI gameUI;
+    private LevelSelect levelSelect;
 
     @Override
     public void init() {
@@ -26,27 +33,40 @@ public class App extends Application {
         stage.setResizable(false);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.centerOnScreen();
+        
+        Database db = null;
+        
+        try {
+            db = new Database("platformerDB.db");
+        } catch (Exception e) {
+            ErrorScreen es = new ErrorScreen(stage, e);
+            stage.setScene(es.getScene());
+        }
 
-        MenuLogic menuLogic = new MenuLogic(stage);
-        GameLogic gameLogic = new GameLogic(gameWindowX, gameWindowY);
+        menuLogic = new MenuLogic(stage, db);
+        gameLogic = new GameLogic(gameWindowX, gameWindowY);
         gameLogic.setMenuLogic(menuLogic);
-
-        OptionsMenu optionsMenu = new OptionsMenu(menuLogic, windowX, windowY);
-        MainMenu mainMenu = new MainMenu(menuLogic, windowX, windowY);
-        GameUI gameUI = new GameUI(menuLogic, gameLogic, gameWindowX, gameWindowY);
-        LevelSelect levelSelect = new LevelSelect(menuLogic, gameLogic, windowX, windowY);
+        
+        setupMenus();
         
         gameLogic.setGameUI(gameUI);
         gameUI.setCharacterPoly(gameLogic.getCharacter().getPoly());
         
         gameLogic.setup();
+
+        stage.setScene(mainMenu.getScene());
+        stage.show();
+    }
+    
+    private void setupMenus() {
+        optionsMenu = new OptionsMenu(menuLogic, windowX, windowY);
+        mainMenu = new MainMenu(menuLogic, windowX, windowY);
+        gameUI = new GameUI(menuLogic, gameLogic, gameWindowX, gameWindowY);
+        levelSelect = new LevelSelect(menuLogic, gameLogic, windowX, windowY);
         
         menuLogic.setMainMenu(mainMenu);
         menuLogic.setOptionsScene(optionsMenu.getScene());
         menuLogic.setGameUI(gameUI.getScene());
         menuLogic.setLevelSelect(levelSelect.getScene());
-
-        stage.setScene(mainMenu.getScene());
-        stage.show();
     }
 }

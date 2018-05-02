@@ -2,21 +2,30 @@ package platformer.domain;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import platformer.dao.Database;
+import platformer.dao.TimeDao;
+import platformer.dao.UsernameDao;
+import platformer.ui.ErrorScreen;
 import platformer.ui.ExitMenu;
 import platformer.ui.MainMenu;
 import platformer.ui.NameMenu;
 
 public class MenuLogic {
     private Stage stage;
+    private Database db;
+    private UsernameDao usernameDao;
+    private TimeDao timeDao;
     private MainMenu mainMenu;
     private Scene optionsScene;
     private Scene gameUI;
     private Scene levelSelect;
-    private String username;
 
-    public MenuLogic(Stage stage) {
+    public MenuLogic(Stage stage, Database db) {
         this.stage = stage;
-        this.username = "ASD";
+        this.db = db;
+        
+        this.usernameDao = new UsernameDao(db);
+        this.timeDao = new TimeDao(db);
     }
     
     public void goToMain() {
@@ -62,13 +71,30 @@ public class MenuLogic {
         System.out.println(stage.isFullScreen());
     }
     
-    public void setUsername(String name) {
-        username = name.substring(0, 3).toUpperCase();
-        mainMenu.updateName();
+    public String getUsername() {
+        String name = "";
+        
+        try {
+            name = usernameDao.findOne(1);
+        } catch (Exception e) {
+            ErrorScreen es = new ErrorScreen(stage, e);
+            stage.setScene(es.getScene());
+        }
+
+        return name;
     }
     
-    public String getUsername() {
-        return this.username;
+    public void setUsername(String name) {
+        String propername = name.substring(0, 3).toUpperCase();
+        
+        try {
+            usernameDao.saveOrUpdate(propername);
+        } catch (Exception e) {
+            ErrorScreen es = new ErrorScreen(stage, e);
+            stage.setScene(es.getScene());
+        }
+        
+        mainMenu.updateName();
     }
 
     public void setMainMenu(MainMenu mainMenu) {
