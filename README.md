@@ -11,6 +11,8 @@ Ohjelmistotekniikan menetelmät -kurssia varten toteutettava harjoitustyö. Ohje
 
 [Viikko 5](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/viikko5)
 
+[Viikko 6](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/viikko6)
+
 ## !!!
 Ohjelmalle on lähes mahdotonta kirjoittaa testejä, koska suurin osa ohjelman logiikasta on välillisesti riippuvaista javafx:n Stage-luokasta, josta ei tuntemattomista syistä ole mahdollista luoda oliota testausta varten.
 
