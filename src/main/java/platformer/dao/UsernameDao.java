@@ -10,10 +10,20 @@ import java.util.List;
 public class UsernameDao implements Dao<String, Integer> {
     private Database db;
     
+    /**
+     * UsernameDao class constructor. Sets the database to search from and save to.
+     * @param db Database abstraction for the DAO to use
+     */
     public UsernameDao(Database db) {
         this.db = db;
     }
 
+    /**
+     * Searches the current username from the database and returns it.
+     * @param key Id to search the username with. Should always be 1 when getting
+     * the current name.
+     * @return Current username fetched from the database. 
+     */
     @Override
     public String findOne(Integer key) throws SQLException {
         Connection conn = db.getConnection();
@@ -30,31 +40,40 @@ public class UsernameDao implements Dao<String, Integer> {
         return name;
     }
 
+    /**
+     * Not supported 
+     */
     @Override
     public List<String> findAll() throws SQLException {
         return null;
     }
 
+    /**
+     * Deletes the previous username from the database and saves the new one.
+     * @param name New username to save into the database
+     * @return Returns back the given name
+     */
     @Override
-    public String saveOrUpdate(String nimi) throws SQLException {
+    public String saveOrUpdate(String name) throws SQLException {
         Connection conn = db.getConnection();
         PreparedStatement clear = conn.prepareStatement("DELETE FROM Username WHERE 1");
         clear.execute();
         
         PreparedStatement addName = conn.prepareStatement("INSERT INTO Username (name) VALUES (?)");
-        addName.setString(1, nimi);
+        addName.setString(1, name);
         addName.execute();
         
         clear.close();
         addName.close();
         conn.close();
         
-        return null;
+        return name;
     }
 
+    /**
+     * Not supported 
+     */
     @Override
     public void delete(Integer key) throws SQLException {
-        System.out.println("asd");
     }
-    
 }

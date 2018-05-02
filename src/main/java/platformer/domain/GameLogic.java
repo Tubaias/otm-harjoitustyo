@@ -31,6 +31,12 @@ public class GameLogic {
     private long chargeCountdown;
     private boolean firstCycle;
     
+    /**
+     * GameLogic class constructor. Sets up private values that don't depend on
+     * external classes.
+     * @param windowX Width of the game window
+     * @param windowY Height of the game window
+     */
     public GameLogic(int windowX, int windowY) {
         this.windowX = windowX;
         this.windowY = windowY;
@@ -40,12 +46,20 @@ public class GameLogic {
         hitCoins = new ArrayList<>();
     }
 
+    /**
+     * Sets up values that depend on external classes and defines the animationtimer
+     * object that handles all frame-by-frame game logic.
+     */
     public void setup() {
         chargeCountdown = 0;
         firstCycle = true;
 
         animationTimer = new AnimationTimer() {
 
+            /**
+             * Handles all real-time game logic like checking inputs and collisions.
+             * @param now Current system time in nanoseconds
+             */
             @Override
             public void handle(long now) {
                 if (firstCycle) {
@@ -191,6 +205,10 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Resets the game and loads up a stage based on the given stage enum.
+     * @param number Enum that defines which stage will be loaded up.
+     */
     public void loadStage(StageNo number) {
         reset();
         gameUI.clear();
@@ -212,6 +230,9 @@ public class GameLogic {
         this.addEntitiesToUI();
     }
 
+    /**
+     * Resets the game state to default based on the current stage.
+     */
     public void reset() {
         firstCycle = true;
         
@@ -228,6 +249,10 @@ public class GameLogic {
         chargeCountdown = 0;
     }
 
+    /**
+     * Handles procedures to be taken when a stage or the whole game is beaten.
+     * @param now Current system time in nanoseconds
+     */
     public void win(long now) {
         System.out.println("tuut");
         reset();
@@ -259,6 +284,10 @@ public class GameLogic {
 
     public AnimationTimer getAnimationTimer() {
         return this.animationTimer;
+    }
+    
+    public GameStage getCurrentStage() {
+        return this.currentStage;
     }
 
     public void setActiveKeys(HashMap<KeyCode, Boolean> activeKeys) {

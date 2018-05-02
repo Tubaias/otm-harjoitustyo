@@ -1,6 +1,7 @@
 
 package platformer.domain.stage;
 
+import platformer.domain.StageNo;
 import platformer.domain.State;
 import platformer.domain.entity.Coin;
 import platformer.domain.entity.EndPoint;
@@ -10,6 +11,8 @@ public class Stage1 extends GameStage {
     
     public Stage1(Double windowX, Double windowY) {
         super(windowX, windowY);
+        
+        number = StageNo.ONE;
         
         this.setupGround();
         this.setupWalls();

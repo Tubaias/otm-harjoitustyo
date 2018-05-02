@@ -22,6 +22,11 @@ public class GameCharacter {
     private boolean canMoveLeft;
     private boolean canMoveRight;
 
+    /**
+     * GameCharacter class constructor. Initializes all private values.
+     * @param translateX Initial x-coordinate for the character to spawn in
+     * @param translateY Initial y-coordinate for the character to spawn in
+     */
     public GameCharacter(double translateX, double translateY) {
         poly = new Polygon(0, 0, 10, 0, 10, 10, 0, 10);
         poly.setTranslateX(translateX);
@@ -68,11 +73,19 @@ public class GameCharacter {
     public State getState() {
         return this.state;
     }
+    
+    public double getChargeDelta() {
+        return this.chargeDelta;
+    }
 
     public boolean isCharged() {
         return this.charged;
     }
 
+    /**
+     * Sets the character in a charged state, saves current momentum in the
+     * chargeDelta value and changes character color to red.
+     */
     public void chargeUp() {
         if (charged) {
             return;
@@ -83,6 +96,10 @@ public class GameCharacter {
         this.setColor(Color.RED);
     }
 
+    /**
+     * Reverts the charged state, wipes momentum stored in chargeDelta and changes
+     * character color to black.
+     */
     public void unCharge() {
         this.charged = false;
         this.chargeDelta = 0d;
@@ -97,6 +114,12 @@ public class GameCharacter {
         this.state = state;
     }
 
+    /**
+     * Checks collisions between the character and a platform and nudges the
+     * character by one pixel when colliding with a wall or a ceiling.
+     * @param plat Platform to check collisions with
+     * @return Returns true if a collision occurred, otherwise returns false.
+     */
     public boolean collision(Platform plat) {
         Polygon shape = plat.getPoly();
         Shape intersection = Shape.intersect(this.poly, shape);
@@ -117,7 +140,12 @@ public class GameCharacter {
 
         return false;
     }
-
+    
+    /**
+     * Checks collisions between the character and a coin.
+     * @param coin Coin to check collisions with
+     * @return Returns true if a collision occurred, otherwise returns false.
+     */
     public boolean coinCollision(Coin coin) {
         Shape shape = coin.getShape();
         Shape intersection = Shape.intersect(this.poly, shape);
@@ -129,7 +157,12 @@ public class GameCharacter {
 
         return false;
     }
-
+    
+    /**
+     * Checks collisions between the character and an EndPoint.
+     * @param goal EndPoint to check collisions with
+     * @return Returns true if a collision occurred, otherwise returns false.
+     */
     public boolean goalCollision(EndPoint goal) {
         Shape shape = goal.getPoly();
         Shape intersection = Shape.intersect(this.poly, shape);
@@ -142,6 +175,9 @@ public class GameCharacter {
         return false;
     }
 
+    /**
+     * Handles all movement that happens on a frame.
+     */
     public void update() {
         double oldX = x;
         double oldY = y;
@@ -157,7 +193,7 @@ public class GameCharacter {
 
         ghost = new Polyline(oldX + 5, oldY + 5, x + 5, y + 5);
 
-        if (state != State.GROUND) {
+        if (state != State.GROUND && !((state == State.LEFTWALL && charged) || (state == State.RIGHTWALL && charged))) {
             dY += 0.0015;
         }
     }
@@ -194,13 +230,11 @@ public class GameCharacter {
         }
     }
 
-    public void simpleJump() {
-        if (state == State.GROUND) {
-            state = State.AIR;
-            this.dY -= jumpHeight;
-        }
-    }
-
+    /**
+     * Jumps in the given direction. If the character is charged a special charged
+     * jump will be executed.
+     * @param dir Direction to jump
+     */
     public void jump(KeyCode dir) {
         if (state == State.AIR || (!charged && (state == State.RIGHTWALL || state == State.LEFTWALL))) {
             return;
@@ -262,10 +296,17 @@ public class GameCharacter {
         }
     }
 
+    /**
+     * Stops horizontal movement in case the character is grounded to simulate
+     * friction.
+     */
     public void stopOnGround() {
         this.dX = 0d;
     }
 
+    /**
+     * Accelerates the character right, up to a cap.
+     */
     public void moveRight() {
         if (!canMoveRight) {
             return;
@@ -278,6 +319,9 @@ public class GameCharacter {
         }
     }
 
+    /**
+     * Accelerates the character left, up to a cap.
+     */
     public void moveLeft() {
         if (!canMoveLeft) {
             return;
@@ -290,6 +334,10 @@ public class GameCharacter {
         }
     }
 
+    /**
+     * Returns the character's current coordinates.
+     * @return Current coordinates separated by a ":" -sign
+     */
     @Override
     public String toString() {
         return poly.getTranslateX() + ":" + poly.getTranslateY();

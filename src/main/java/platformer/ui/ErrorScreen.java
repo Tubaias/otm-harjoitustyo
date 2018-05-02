@@ -36,7 +36,7 @@ public class ErrorScreen {
         exitLayout.add(new Label(""), 0, 3);
         exitLayout.add(confirmButton, 0, 4);
 
-        scene = new Scene(exitLayout, 360, 120);
+        scene = new Scene(exitLayout, 360, 360);
 
         scene.setOnKeyPressed(event -> {
             stage.close();

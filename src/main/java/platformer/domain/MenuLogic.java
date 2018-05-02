@@ -20,6 +20,11 @@ public class MenuLogic {
     private Scene gameUI;
     private Scene levelSelect;
 
+    /**
+     * MenuLogic class constructor.
+     * @param stage main stage that the menulogic manipulates
+     * @param db database for saving username and times
+     */
     public MenuLogic(Stage stage, Database db) {
         this.stage = stage;
         this.db = db;
@@ -28,37 +33,61 @@ public class MenuLogic {
         this.timeDao = new TimeDao(db);
     }
     
+    /**
+     * Changes scene to the main menu screen.
+     */
     public void goToMain() {
         stage.setScene(mainMenu.getScene());
     }
 
+    /**
+     * Changes scene to the options menu.
+     */
     public void goToOptions() {
         stage.setScene(optionsScene);
     }
 
+    /**
+     * Changes scene to the game screen.
+     */
     public void goToGame() {
         stage.setScene(gameUI);
     }
     
+    /**
+     * Changes scene to the level select menu.
+     */
     public void goToLevels() {
         stage.setScene(levelSelect);
     }
 
+    /**
+     * Displays a dialog asking if the user wants to exit the application.
+     */
     public void exitDialog() {
         ExitMenu exitMenu = new ExitMenu(stage.getScene(), this);
         stage.setScene(exitMenu.getScene());
     }
     
+    /**
+     * Displays a screen for changing the current username.
+     */
     public void nameChangeDialog() {
         NameMenu nameMenu = new NameMenu(stage.getScene(), this);
         stage.setScene(nameMenu.getScene());
     }
     
+    /**
+     * Exits the application.
+     */
     public void quit() {
         stage.close();
     }
 
-    //does not work for reasons???
+    /**
+     * Toggles between windowed and fullscreen mode. Does not work properly in it's
+     * current state.
+     */
     public void toggleFullscreen() {
         if (stage.isFullScreen()) {
             stage.setFullScreen(false);
@@ -71,6 +100,10 @@ public class MenuLogic {
         System.out.println(stage.isFullScreen());
     }
     
+    /**
+     * Fetches the current username from the database and returns it
+     * @return current username
+     */
     public String getUsername() {
         String name = "";
         
@@ -84,6 +117,12 @@ public class MenuLogic {
         return name;
     }
     
+    /**
+     * Modifies given name to correct format, saves it to the database as the
+     * current username and updates the main menu to display the new name.
+     * @param name The name you wish to save to the database. Doesn't have to be
+     * in correct format when given as a parameter.
+     */
     public void setUsername(String name) {
         String propername = name.substring(0, 3).toUpperCase();
         
@@ -117,6 +156,9 @@ public class MenuLogic {
         stage.setScene(scene);
     }
  
+    /**
+     * Centers the stage on the monitor. Doesn't seem to work in it's current state.
+     */
     public void centerStage() {
         stage.centerOnScreen();
     }

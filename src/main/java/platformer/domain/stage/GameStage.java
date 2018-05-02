@@ -2,6 +2,7 @@
 package platformer.domain.stage;
 
 import java.util.ArrayList;
+import platformer.domain.StageNo;
 import platformer.domain.entity.Coin;
 import platformer.domain.entity.EndPoint;
 import platformer.domain.entity.Platform;
@@ -12,6 +13,7 @@ public class GameStage {
     Double windowX;
     Double windowY;
     EndPoint goal;
+    StageNo number;
     
     public GameStage(Double windowX, Double windowY) {
         this.platforms = new ArrayList<>();
@@ -19,6 +21,10 @@ public class GameStage {
         
         this.windowX = windowX;
         this.windowY = windowY;
+    }
+    
+    public StageNo getNumber() {
+        return this.number;
     }
     
     public ArrayList<Platform> getPlatforms() {

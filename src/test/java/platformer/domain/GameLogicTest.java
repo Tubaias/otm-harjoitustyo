@@ -2,6 +2,7 @@
 package platformer.domain;
 
 import java.util.HashMap;
+import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import platformer.domain.entity.GameCharacter;
 public class GameLogicTest {
     private GameLogic logic;
     private HashMap<KeyCode, Boolean> keys;
+    private GameCharacter ch;
+    private AnimationTimer timer;
     
     public GameLogicTest() {
     }
@@ -22,12 +25,9 @@ public class GameLogicTest {
         
         keys = new HashMap<>();
         logic.setActiveKeys(keys);
-    }
-    
-    @Test
-    public void getCharacterReturnsCharacter() {
-        GameCharacter comparison = new GameCharacter(0.0, 0.0);
-        assertTrue(comparison.getClass().equals(logic.getCharacter().getClass()));
+        
+        timer = logic.getAnimationTimer();
+        ch = logic.getCharacter();
     }
     
     @Test
