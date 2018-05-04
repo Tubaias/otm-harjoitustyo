@@ -78,6 +78,10 @@ public class GameUI {
         gameDraw.getChildren().clear();
         gameDraw.getChildren().add(characterPoly);
     }
+    
+    public void startGame() {
+        gameLogic.startGame();
+    }
 
     private void setup() {
         logic.centerStage();

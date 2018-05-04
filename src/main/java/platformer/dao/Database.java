@@ -35,7 +35,7 @@ public class Database {
         PreparedStatement createCurrentName = conn.prepareStatement("CREATE TABLE Username (id integer PRIMARY KEY, name varchar(3))");
         createCurrentName.execute();
         
-        PreparedStatement createTimes = conn.prepareStatement("CREATE TABLE ClearTime (id integer PRIMARY KEY, player varchar(3), stage integer, time float)");
+        PreparedStatement createTimes = conn.prepareStatement("CREATE TABLE ClearTime (id integer PRIMARY KEY, player varchar(3), stage integer, time bigint)");
         createTimes.execute();
         
         PreparedStatement insertDefaultName = conn.prepareStatement("INSERT INTO Username (name) VALUES ('ASD')");

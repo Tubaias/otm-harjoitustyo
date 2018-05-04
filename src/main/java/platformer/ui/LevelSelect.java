@@ -9,7 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import platformer.domain.GameLogic;
 import platformer.domain.MenuLogic;
-import platformer.domain.StageNo;
+import platformer.domain.StageNum;
 
 public class LevelSelect {
     private MenuLogic logic;
@@ -39,18 +39,25 @@ public class LevelSelect {
         levels.setAlignment(Pos.CENTER);
         levels.setPadding(new Insets(10, 0, 10, 0));
         
-        Button stageDebug = new Button("Stage Debug");
+        Button stageZero = new Button("Stage 0");
         Button stageOne = new Button("Stage 1");
+        Button stageTwo = new Button("Stage 2");
+        Button stageThree = new Button("Stage 3");
         
-        levels.getChildren().addAll(stageDebug, stageOne);
+        levels.getChildren().addAll(stageZero, stageOne, stageTwo, stageThree);
         
-        stageDebug.setOnAction((event) -> {
-            gameLogic.loadStage(StageNo.DEBUG);
+        stageZero.setOnAction((event) -> {
+            gameLogic.loadStage(StageNum.ZERO);
             logic.goToGame();
         });
         
         stageOne.setOnAction((event) -> {
-            gameLogic.loadStage(StageNo.ONE);
+            gameLogic.loadStage(StageNum.ONE);
+            logic.goToGame();
+        });
+        
+        stageTwo.setOnAction((event) -> {
+            gameLogic.loadStage(StageNum.TWO);
             logic.goToGame();
         });
         

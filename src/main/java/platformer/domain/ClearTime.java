@@ -2,25 +2,38 @@
 package platformer.domain;
 
 public class ClearTime {
+    private int id;
     private String player;
-    private StageNo stage;
-    private Double time;
+    private StageNum stage;
+    private long time;
 
-    public ClearTime(String player, StageNo stage, Double time) {
+    public ClearTime(int id, String player, StageNum stage, long time) {
+        this.id = id;
         this.player = player;
         this.stage = stage;
         this.time = time;
+    }
+    
+    public ClearTime(int id, String player, int stage, long time) {
+        this.id = id;
+        this.player = player;
+        this.stage = StageNum.fromInt(stage);
+        this.time = time;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getPlayer() {
         return player;
     }
 
-    public StageNo getStage() {
+    public StageNum getStage() {
         return stage;
     }
 
-    public Double getTime() {
+    public long getTime() {
         return time;
     }
 }

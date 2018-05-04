@@ -59,6 +59,10 @@ public class MainMenu {
             logic.goToLevels();
         });
         
+        timesButton.setOnAction((ActionEvent event) -> {
+            logic.goToTimes();
+        });
+        
         optionsButton.setOnAction((ActionEvent event) -> {
             logic.goToOptions();
         });

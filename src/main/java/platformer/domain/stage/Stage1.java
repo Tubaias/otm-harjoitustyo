@@ -1,7 +1,7 @@
 
 package platformer.domain.stage;
 
-import platformer.domain.StageNo;
+import platformer.domain.StageNum;
 import platformer.domain.State;
 import platformer.domain.entity.Coin;
 import platformer.domain.entity.EndPoint;
@@ -12,7 +12,7 @@ public class Stage1 extends GameStage {
     public Stage1(Double windowX, Double windowY) {
         super(windowX, windowY);
         
-        number = StageNo.ONE;
+        number = StageNum.ONE;
         
         this.setupGround();
         this.setupWalls();
@@ -22,7 +22,7 @@ public class Stage1 extends GameStage {
     
     private void setupGround() {
         Platform plat1 = new Platform(State.GROUND, 0, 0, 200, 0, 200, 250, 0, 250);
-        Platform plat2 = new Platform(State.GROUND, 0, 0, 200, 0, 200, 250, 0, 250);;
+        Platform plat2 = new Platform(State.GROUND, 0, 0, 200, 0, 200, 250, 0, 250);
 
         plat1.setTranslateY(windowY * 0.8);
         

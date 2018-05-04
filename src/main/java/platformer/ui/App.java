@@ -1,3 +1,4 @@
+
 package platformer.ui;
 
 import platformer.domain.GameLogic;
@@ -19,6 +20,7 @@ public class App extends Application {
     private OptionsMenu optionsMenu;
     private GameUI gameUI;
     private LevelSelect levelSelect;
+    private TimeDisplayMenu bestTimes;
 
     /**
      * Initializes window sizes for the different scenes to hardcoded values.
@@ -40,7 +42,7 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) {
-        stage.setTitle("spaget");
+        stage.setTitle("SUPER PLATFORMER EXTREME");
         stage.setResizable(false);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.centerOnScreen();
@@ -74,10 +76,12 @@ public class App extends Application {
         mainMenu = new MainMenu(menuLogic, windowX, windowY);
         gameUI = new GameUI(menuLogic, gameLogic, gameWindowX, gameWindowY);
         levelSelect = new LevelSelect(menuLogic, gameLogic, windowX, windowY);
+        bestTimes = new TimeDisplayMenu(menuLogic, windowX, windowY);
 
         menuLogic.setMainMenu(mainMenu);
         menuLogic.setOptionsScene(optionsMenu.getScene());
-        menuLogic.setGameUI(gameUI.getScene());
+        menuLogic.setGameUI(gameUI);
         menuLogic.setLevelSelect(levelSelect.getScene());
+        menuLogic.setTimeDisplay(bestTimes.getScene());
     }
 }

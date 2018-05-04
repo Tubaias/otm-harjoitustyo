@@ -4,20 +4,18 @@ import java.util.ArrayList;
 import platformer.domain.entity.GameCharacter;
 import java.util.HashMap;
 import javafx.animation.AnimationTimer;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 import platformer.domain.entity.Coin;
 import platformer.domain.entity.EndPoint;
 import platformer.domain.entity.Platform;
 import platformer.domain.stage.GameStage;
 import platformer.domain.stage.Stage1;
-import platformer.domain.stage.StageDebug;
+import platformer.domain.stage.Stage0;
+import platformer.domain.stage.Stage2;
 import platformer.ui.GameUI;
 
 public class GameLogic {
 
-    private Stage stage;
     private int windowX;
     private int windowY;
     private HashMap<KeyCode, Boolean> activeKeys;
@@ -29,11 +27,14 @@ public class GameLogic {
     private Platform lastCollision;
     private ArrayList<Coin> hitCoins;
     private long chargeCountdown;
+    private long startTime;
     private boolean firstCycle;
-    
+    private boolean playThroughMode;
+
     /**
      * GameLogic class constructor. Sets up private values that don't depend on
      * external classes.
+     *
      * @param windowX Width of the game window
      * @param windowY Height of the game window
      */
@@ -42,13 +43,21 @@ public class GameLogic {
         this.windowY = windowY;
 
         lastCollision = new Platform(State.AIR, 0, 0, 0, 0, 0, 0, 0, 0);
-        character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
+        
+        if (currentStage == null) {
+            character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
+        } else {
+            character = new GameCharacter(currentStage.characterX, currentStage.characterY);
+        }
+        
+        
         hitCoins = new ArrayList<>();
+        playThroughMode = false;
     }
 
     /**
-     * Sets up values that depend on external classes and defines the animationtimer
-     * object that handles all frame-by-frame game logic.
+     * Sets up values that depend on external classes and defines the
+     * animationtimer object that handles all frame-by-frame game logic.
      */
     public void setup() {
         chargeCountdown = 0;
@@ -57,16 +66,22 @@ public class GameLogic {
         animationTimer = new AnimationTimer() {
 
             /**
-             * Handles all real-time game logic like checking inputs and collisions.
+             * Handles all real-time game logic like checking inputs and
+             * collisions.
+             *
              * @param now Current system time in nanoseconds
              */
             @Override
             public void handle(long now) {
                 if (firstCycle) {
-                    gameUI.setStartTime(now);
+                    if (!playThroughMode) {
+                        startTime = now;
+                        gameUI.setStartTime(now);
+                    }
+
                     firstCycle = false;
                 }
-                
+
                 gameUI.updateTimer(now);
                 checkOutOfBounds();
                 checkCharge(now);
@@ -185,7 +200,7 @@ public class GameLogic {
         }
 
         if (character.goalCollision(goal)) {
-            win(now);
+            stageClear(now);
         }
     }
 
@@ -206,19 +221,49 @@ public class GameLogic {
     }
 
     /**
+     * Starts a new timed playthrough of all levels.
+     */
+    public void startGame() {
+        playThroughMode = true;
+        loadStage(StageNum.ZERO);
+    }
+
+    private void nextStage(long now) {
+        StageNum currentNumber = currentStage.getNumber();
+        
+        switch (currentNumber) {
+            case ZERO:
+                loadStage(StageNum.ONE);
+                break;
+            case ONE:
+                loadStage(StageNum.TWO);
+                break;
+            case TWO:
+                loadStage(StageNum.THREE);
+                break;
+            default:
+                gameClear(now);
+                break;
+        }
+    }
+
+    /**
      * Resets the game and loads up a stage based on the given stage enum.
+     *
      * @param number Enum that defines which stage will be loaded up.
      */
-    public void loadStage(StageNo number) {
+    public void loadStage(StageNum number) {
         reset();
         gameUI.clear();
 
         GameStage gStage;
 
-        if (number == StageNo.ONE) {
+        if (number == StageNum.ONE) {
             gStage = new Stage1((double) windowX, (double) windowY);
+        } else if (number == StageNum.TWO) { 
+            gStage = new Stage2((double) windowX, (double) windowY);
         } else {
-            gStage = new StageDebug((double) windowX, (double) windowY);
+            gStage = new Stage0((double) windowX, (double) windowY);
         }
 
         currentStage = gStage;
@@ -227,7 +272,7 @@ public class GameLogic {
             gameUI.addShape(p.getPoly());
         }
 
-        this.addEntitiesToUI();
+        addEntitiesToUI();
     }
 
     /**
@@ -235,26 +280,49 @@ public class GameLogic {
      */
     public void reset() {
         firstCycle = true;
-        
+
         if (currentStage == null) {
             return;
         }
 
         currentStage.setupEntities();
+        addEntitiesToUI();
 
-        this.addEntitiesToUI();
-
-        character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
+        character = new GameCharacter(currentStage.characterX, currentStage.characterY);
         gameUI.setCharacterPoly(character.getPoly());
         chargeCountdown = 0;
     }
 
     /**
-     * Handles procedures to be taken when a stage or the whole game is beaten.
+     * Handles procedures to be taken when a stage is beaten.
+     *
      * @param now Current system time in nanoseconds
      */
-    public void win(long now) {
-        System.out.println("tuut");
+    public void stageClear(long now) {
+        ClearTime clear = new ClearTime(1, menuLogic.getUsername(), currentStage.getNumber(), now - startTime);
+        boolean saved = menuLogic.assessAndSave(clear);
+
+        if (saved) {
+            System.out.println("SAVED");
+        }
+
+        reset();
+    }
+
+    /**
+     * Handles procedures to be taken when the game is beaten.
+     *
+     * @param now Current system time in nanoseconds
+     */
+    public void gameClear(long now) {
+        ClearTime clear = new ClearTime(1, menuLogic.getUsername(), StageNum.GAME, now - startTime);
+        boolean saved = menuLogic.assessAndSave(clear);
+
+        if (saved) {
+            System.out.println("SAVED");
+        }
+
+        playThroughMode = false;
         reset();
     }
 
@@ -285,7 +353,7 @@ public class GameLogic {
     public AnimationTimer getAnimationTimer() {
         return this.animationTimer;
     }
-    
+
     public GameStage getCurrentStage() {
         return this.currentStage;
     }
