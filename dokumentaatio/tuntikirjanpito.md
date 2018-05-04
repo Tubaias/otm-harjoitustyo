@@ -17,4 +17,5 @@
 | 26.4. | 6    | Lopullinen törmäyksentarkastuskoodi ja hieman pelilogiikan muutoksia |
 | 30.4. | 4    | Pelin voittaminen ja ajastus, käyttäjänimi |
 | 2.5.  | 5    | Osittainen tietokannan käyttö, testejä, javadocs |
-| yht   | 44   | | 
+| 4.5.  | 4    | Täysi tietokannan käyttö, tulosruutu, koko pelin pelaaminen kerralla |
+| yht   | 48   | | 
