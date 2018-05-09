@@ -117,8 +117,10 @@ public class GameLogic {
                 }
 
                 if (activeKeys.getOrDefault(KeyCode.T, false)) {
-                    activeKeys.put(KeyCode.T, false);
-                    resetPlaythrough(now);
+                    if (playThroughMode) {
+                        activeKeys.put(KeyCode.T, false);
+                        resetPlaythrough(now);
+                    }
                 }
 
                 character.update();
@@ -332,7 +334,7 @@ public class GameLogic {
      */
     public void stageClear(long now) {
         ClearTime clear = null;
-        
+
         if (playThroughMode) {
             clear = new ClearTime(1, menuLogic.getUsername(), currentStage.getNumber(), now - stageStartTime);
         } else {
@@ -344,7 +346,7 @@ public class GameLogic {
         if (saved) {
             System.out.println("SAVED");
         }
-        
+
         if (playThroughMode) {
             if (currentStage.getNumber() == StageNum.THREE) {
                 gameClear(now);
