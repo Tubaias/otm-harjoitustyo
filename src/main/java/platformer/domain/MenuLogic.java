@@ -146,6 +146,10 @@ public class MenuLogic {
      * in correct format when given as a parameter.
      */
     public void setUsername(String name) {
+        while (name.length() < 3) {
+            name += "_";
+        }
+        
         String propername = name.substring(0, 3).toUpperCase();
 
         try {

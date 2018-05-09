@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
@@ -37,6 +38,7 @@ public class GameUI {
         this.windowY = gameWindowY;
         activeKeys = new HashMap();
         timer = new Label("Sample Text");
+        timer.setTextFill(Paint.valueOf("RED"));
         formatter = new DecimalFormat("0.00");
 
         this.setup();
@@ -106,6 +108,7 @@ public class GameUI {
         this.scene = new Scene(gameLayout, windowX, windowY);
 
         goBack.setOnAction((ActionEvent event) -> {
+            gameLogic.fullReset();
             logic.goToMain();
         });
 

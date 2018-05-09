@@ -12,6 +12,7 @@ import platformer.domain.stage.GameStage;
 import platformer.domain.stage.Stage1;
 import platformer.domain.stage.Stage0;
 import platformer.domain.stage.Stage2;
+import platformer.domain.stage.Stage3;
 import platformer.ui.GameUI;
 
 public class GameLogic {
@@ -28,6 +29,7 @@ public class GameLogic {
     private ArrayList<Coin> hitCoins;
     private long chargeCountdown;
     private long startTime;
+    private long stageStartTime;
     private boolean firstCycle;
     private boolean playThroughMode;
 
@@ -43,14 +45,13 @@ public class GameLogic {
         this.windowY = windowY;
 
         lastCollision = new Platform(State.AIR, 0, 0, 0, 0, 0, 0, 0, 0);
-        
+
         if (currentStage == null) {
             character = new GameCharacter((double) windowX / 10, (double) windowY * 0.7);
         } else {
             character = new GameCharacter(currentStage.characterX, currentStage.characterY);
         }
-        
-        
+
         hitCoins = new ArrayList<>();
         playThroughMode = false;
     }
@@ -77,6 +78,8 @@ public class GameLogic {
                     if (!playThroughMode) {
                         startTime = now;
                         gameUI.setStartTime(now);
+                    } else {
+                        stageStartTime = now;
                     }
 
                     firstCycle = false;
@@ -104,12 +107,18 @@ public class GameLogic {
 
                 if (activeKeys.getOrDefault(KeyCode.ESCAPE, false)) {
                     activeKeys.put(KeyCode.ESCAPE, false);
+                    fullReset();
                     menuLogic.goToMain();
                 }
 
                 if (activeKeys.getOrDefault(KeyCode.R, false)) {
                     activeKeys.put(KeyCode.R, false);
                     reset();
+                }
+
+                if (activeKeys.getOrDefault(KeyCode.T, false)) {
+                    activeKeys.put(KeyCode.T, false);
+                    resetPlaythrough(now);
                 }
 
                 character.update();
@@ -230,7 +239,7 @@ public class GameLogic {
 
     private void nextStage(long now) {
         StageNum currentNumber = currentStage.getNumber();
-        
+
         switch (currentNumber) {
             case ZERO:
                 loadStage(StageNum.ONE);
@@ -253,17 +262,23 @@ public class GameLogic {
      * @param number Enum that defines which stage will be loaded up.
      */
     public void loadStage(StageNum number) {
-        reset();
         gameUI.clear();
 
         GameStage gStage;
 
-        if (number == StageNum.ONE) {
-            gStage = new Stage1((double) windowX, (double) windowY);
-        } else if (number == StageNum.TWO) { 
-            gStage = new Stage2((double) windowX, (double) windowY);
-        } else {
-            gStage = new Stage0((double) windowX, (double) windowY);
+        switch (number) {
+            case ONE:
+                gStage = new Stage1((double) windowX, (double) windowY);
+                break;
+            case TWO:
+                gStage = new Stage2((double) windowX, (double) windowY);
+                break;
+            case THREE:
+                gStage = new Stage3((double) windowX, (double) windowY);
+                break;
+            default:
+                gStage = new Stage0((double) windowX, (double) windowY);
+                break;
         }
 
         currentStage = gStage;
@@ -273,6 +288,7 @@ public class GameLogic {
         }
 
         addEntitiesToUI();
+        reset();
     }
 
     /**
@@ -294,16 +310,50 @@ public class GameLogic {
     }
 
     /**
+     * Resets the game, even when in playthrough mode, and clears active keys.
+     */
+    public void fullReset() {
+        activeKeys.clear();
+        playThroughMode = false;
+        reset();
+    }
+
+    private void resetPlaythrough(long now) {
+        startTime = now;
+        gameUI.setStartTime(now);
+
+        loadStage(StageNum.ZERO);
+    }
+
+    /**
      * Handles procedures to be taken when a stage is beaten.
      *
      * @param now Current system time in nanoseconds
      */
     public void stageClear(long now) {
-        ClearTime clear = new ClearTime(1, menuLogic.getUsername(), currentStage.getNumber(), now - startTime);
+        ClearTime clear = null;
+        
+        if (playThroughMode) {
+            clear = new ClearTime(1, menuLogic.getUsername(), currentStage.getNumber(), now - stageStartTime);
+        } else {
+            clear = new ClearTime(1, menuLogic.getUsername(), currentStage.getNumber(), now - startTime);
+        }
+
         boolean saved = menuLogic.assessAndSave(clear);
 
         if (saved) {
             System.out.println("SAVED");
+        }
+        
+        if (playThroughMode) {
+            if (currentStage.getNumber() == StageNum.THREE) {
+                gameClear(now);
+            } else {
+                StageNum nextStage = StageNum.fromInt(currentStage.getNumber().getIntValue() + 1);
+                loadStage(nextStage);
+            }
+
+            return;
         }
 
         reset();
@@ -323,7 +373,7 @@ public class GameLogic {
         }
 
         playThroughMode = false;
-        reset();
+        menuLogic.goToMain();
     }
 
     private void addEntitiesToUI() {

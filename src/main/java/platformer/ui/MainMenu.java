@@ -52,7 +52,7 @@ public class MainMenu {
         mainLayout.getChildren().addAll(startButton, levelSelectButton, timesButton, optionsButton);
         
         startButton.setOnAction((ActionEvent event) -> {
-            logic.goToGame();
+            logic.startGame();
         });
         
         levelSelectButton.setOnAction((ActionEvent event) -> {

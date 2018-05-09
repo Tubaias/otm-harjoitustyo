@@ -16,16 +16,16 @@ public enum StageNum {
     
     public static StageNum fromInt(int value) {
         switch (value) {
+            case 0:
+                return ZERO;
             case 1:
                 return ONE;
             case 2:
                 return TWO;
             case 3:
                 return THREE;
-            case 99:
-                return GAME;
             default:
-                return ZERO;
+                return GAME;
         }
     }
 }

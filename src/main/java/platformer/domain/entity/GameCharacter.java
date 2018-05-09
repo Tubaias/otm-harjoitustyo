@@ -19,8 +19,6 @@ public class GameCharacter {
     private boolean charged;
     private double chargeDelta;
     private double jumpHeight;
-    private boolean canMoveLeft;
-    private boolean canMoveRight;
 
     /**
      * GameCharacter class constructor. Initializes all private values.
@@ -40,8 +38,6 @@ public class GameCharacter {
 
         this.state = State.AIR;
         this.charged = false;
-        this.canMoveLeft = true;
-        this.canMoveRight = true;
 
         this.jumpHeight = 0.35;
     }
@@ -239,13 +235,7 @@ public class GameCharacter {
         if (state == State.AIR || (!charged && (state == State.RIGHTWALL || state == State.LEFTWALL))) {
             return;
         }
-
-        if (state == State.RIGHTWALL) {
-            canMoveLeft = false;
-        } else if (state == State.LEFTWALL) {
-            canMoveRight = false;
-        }
-
+        
         if (charged) {
             chargedJump(dir);
         } else {
@@ -258,9 +248,9 @@ public class GameCharacter {
     private void chargedJump(KeyCode dir) {
         if (dir == KeyCode.UP) {
             this.jumpUp();
-        } else if (dir == KeyCode.RIGHT && canMoveRight) {
+        } else if (dir == KeyCode.RIGHT) {
             this.jumpRight();
-        } else if (dir == KeyCode.LEFT && canMoveLeft) {
+        } else if (dir == KeyCode.LEFT) {
             this.jumpLeft();
         }
 
@@ -308,12 +298,6 @@ public class GameCharacter {
      * Accelerates the character right, up to a cap.
      */
     public void moveRight() {
-        if (!canMoveRight) {
-            return;
-        }
-
-        canMoveLeft = true;
-
         if (dX < 0.15) {
             dX += 0.005;
         }
@@ -323,12 +307,6 @@ public class GameCharacter {
      * Accelerates the character left, up to a cap.
      */
     public void moveLeft() {
-        if (!canMoveLeft) {
-            return;
-        }
-
-        canMoveRight = true;
-
         if (dX > -0.15) {
             dX -= 0.005;
         }

@@ -61,6 +61,11 @@ public class LevelSelect {
             logic.goToGame();
         });
         
+        stageThree.setOnAction((event) -> {
+            gameLogic.loadStage(StageNum.THREE);
+            logic.goToGame();
+        });
+        
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 logic.goToMain();
