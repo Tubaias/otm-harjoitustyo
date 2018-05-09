@@ -17,7 +17,7 @@ Ohjelmistotekniikan menetelmät -kurssia varten toteutettava harjoitustyö. Ohje
 Ohjelmalle on lähes mahdotonta kirjoittaa testejä, koska suurin osa ohjelman logiikasta on välillisesti riippuvaista javafx:n Stage-luokasta, josta ei tuntemattomista syistä ole mahdollista luoda oliota testausta varten.
 
 ## Tämänhetkinen toiminnallisuus
-Ohjelmassa on päävalikko, tasonvalintaruutu, tulosruutu, asetusvalikko, ja peliruutu, jossa on 'pelaajahahmo' ja nappi pääruutuun palaamista varten. Ohjelmassa voi siirtyä taaksepäin Esc-näppäimellä ja peliruudussa hahmoa voi ohjata nuolinäppäimillä.
+Ohjelmassa on päävalikko, tasonvalintaruutu, tulosruutu, asetusvalikko, ja peliruutu, jossa on 'pelaajahahmo' ja nappi pääruutuun palaamista varten. Ohjelmassa voi siirtyä taaksepäin Esc-näppäimellä ja peliruudussa hahmoa voi ohjata nuolinäppäimillä. Peliruudussa nykyisen tason voi aloittaa alusta R-näppäimellä ja koko pelin läpipeluun voi aloittaa alusta T-näppäimellä.
 
 ## Komentorivitoiminnot
 
