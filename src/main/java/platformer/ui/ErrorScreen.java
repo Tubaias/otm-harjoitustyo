@@ -30,7 +30,7 @@ public class ErrorScreen {
 
         exitLayout.setAlignment(Pos.CENTER);
 
-        exitLayout.add(new Label("OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!"), 0, 0);
+        exitLayout.add(new Label("Something went wrong"), 0, 0);
         exitLayout.add(new Label(""), 0, 1);
         exitLayout.add(new Label(exception.getMessage()), 0, 2);
         exitLayout.add(new Label(""), 0, 3);

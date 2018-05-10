@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import platformer.dao.Database;
 import platformer.dao.TimeDao;
 import platformer.dao.UsernameDao;
+import platformer.ui.DatabaseClearMenu;
 import platformer.ui.ErrorScreen;
 import platformer.ui.ExitMenu;
 import platformer.ui.GameUI;
@@ -96,28 +97,20 @@ public class MenuLogic {
         NameMenu nameMenu = new NameMenu(stage.getScene(), this);
         stage.setScene(nameMenu.getScene());
     }
+    
+    /**
+     * Displays a dialog asking if the user wants to delete all times.
+     */
+    public void databaseResetDialog() {
+        DatabaseClearMenu clearMenu = new DatabaseClearMenu(stage.getScene(), this);
+        stage.setScene(clearMenu.getScene());
+    }
 
     /**
      * Exits the application.
      */
     public void quit() {
         stage.close();
-    }
-
-    /**
-     * Toggles between windowed and fullscreen mode. Does not work properly in
-     * it's current state.
-     */
-    public void toggleFullscreen() {
-        if (stage.isFullScreen()) {
-            stage.setFullScreen(false);
-            stage.setResizable(false);
-        } else {
-            stage.setResizable(true);
-            stage.setFullScreen(true);
-        }
-
-        System.out.println(stage.isFullScreen());
     }
 
     /**
@@ -220,6 +213,18 @@ public class MenuLogic {
             stage.setScene(es.getScene());
         }
     }
+    
+    /**
+     * Deletes all cleartimes from the database.
+     */
+    public void resetTimes() {
+        try {
+            timeDao.clearAll();
+        } catch (Exception e) {
+            ErrorScreen es = new ErrorScreen(stage, e);
+            stage.setScene(es.getScene());
+        }
+    }
 
     public void setMainMenu(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
@@ -243,14 +248,6 @@ public class MenuLogic {
 
     public void setScene(Scene scene) {
         stage.setScene(scene);
-    }
-
-    /**
-     * Centers the stage on the monitor. Doesn't seem to work in it's current
-     * state.
-     */
-    public void centerStage() {
-        stage.centerOnScreen();
     }
     
     /**

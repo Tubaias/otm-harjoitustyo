@@ -86,8 +86,6 @@ public class GameUI {
     }
 
     private void setup() {
-        logic.centerStage();
-        
         timer.setTranslateY(-windowY + 30);
         gameLogic.setActiveKeys(activeKeys);
         

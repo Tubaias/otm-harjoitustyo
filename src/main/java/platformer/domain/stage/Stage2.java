@@ -28,7 +28,8 @@ public class Stage2 extends GameStage {
         plat1.setTranslateX(windowX / 2 - 100);
         plat1.setTranslateY(windowY - 100);
         
-        Platform ceiling = new Platform(State.AIR, 0, 0, windowX.intValue(), 0, windowX.intValue(), 1, 0, 1);
+        Platform ceiling = new Platform(State.AIR, 0, 0, windowX.intValue(), 0, windowX.intValue(), 50, 0, 50);
+        ceiling.setTranslateY(-50d);
 
         platforms.add(plat1);
         platforms.add(ceiling);
@@ -57,8 +58,8 @@ public class Stage2 extends GameStage {
     }
     
     private void setupCorners() {
-        Platform plat1rightCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
-        Platform plat1leftCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat1rightCorner = new Platform(State.CORNER, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat1leftCorner = new Platform(State.CORNER, 0, 0, 1, 0, 1, 1, 0, 1);
         
         plat1rightCorner.setTranslateX(windowX / 2 + 100);
         plat1rightCorner.setTranslateY(windowY - 100);

@@ -25,7 +25,7 @@ public class Stage3 extends GameStage {
     }
     
     private void setupGround() {
-        Platform ground = new Platform(State.GROUND, 0, 0, windowX.intValue(), 0, windowX.intValue(), 1, 0, 1);
+        Platform ground = new Platform(State.GROUND, 0, 0, windowX.intValue(), 0, windowX.intValue(), 50, 0, 50);
         Platform startPlat = new Platform(State.GROUND, 0, 0, 200, 0, 200, 40, 0, 40);
         Platform endPlat = new Platform(State.GROUND, 0, 0, 200, 0, 200, 40, 0, 40);
 
@@ -151,13 +151,15 @@ public class Stage3 extends GameStage {
     }
     
     private void setupBounds() {
-        Platform leftBound = new Platform(State.RIGHTWALL, 0, 0, 1, 0, 1, windowY.intValue(), 0, windowY.intValue());
-        Platform rightBound = new Platform(State.LEFTWALL, 0, 0, 1, 0, 1, windowY.intValue(), 0, windowY.intValue());
-        Platform ceiling = new Platform(State.AIR, 0, 0, windowX.intValue(), 0, windowX.intValue(), 1, 0, 1);
+        Platform leftBound = new Platform(State.RIGHTWALL, 0, 0, 50, 0, 50, windowY.intValue(), 0, windowY.intValue());
+        Platform rightBound = new Platform(State.LEFTWALL, 0, 0, 50, 0, 50, windowY.intValue(), 0, windowY.intValue());
+        Platform ceiling = new Platform(State.AIR, 0, 0, windowX.intValue(), 0, windowX.intValue(), 50, 0, 50);
         
-        leftBound.setTranslateX(-1.0);
+        leftBound.setTranslateX(-50d);
         
         rightBound.setTranslateX(windowX);
+        
+        ceiling.setTranslateY(-50d);
         
         platforms.add(leftBound);
         platforms.add(rightBound);
@@ -200,10 +202,10 @@ public class Stage3 extends GameStage {
     }
     
     private void setupCorners() {
-        Platform plat1rightCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
-        Platform plat1leftCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
-        Platform plat2rightCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
-        Platform plat2leftCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat1rightCorner = new Platform(State.CORNER, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat1leftCorner = new Platform(State.CORNER, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat2rightCorner = new Platform(State.CORNER, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat2leftCorner = new Platform(State.CORNER, 0, 0, 1, 0, 1, 1, 0, 1);
         
         plat1rightCorner.setTranslateX(39d);
         plat1rightCorner.setTranslateY(windowY / 2 - 20);

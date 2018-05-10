@@ -17,6 +17,7 @@ public class Stage1 extends GameStage {
         this.setupGround();
         this.setupWalls();
         this.setupCorners();
+        this.setupBounds();
         this.setupEntities();
     }
     
@@ -36,8 +37,6 @@ public class Stage1 extends GameStage {
     private void setupWalls() {
         Platform plat1rightWall = new Platform(State.RIGHTWALL, 0, 0, 1, 0, 1, 250, 0, 250);
         Platform plat2leftWall = new Platform(State.LEFTWALL, 0, 0, 1, 0, 1, 250, 0, 250);
-
-        Platform rightBound = new Platform(State.LEFTWALL, 0, 0, 1, 0, 1, windowY.intValue(), 0, windowY.intValue());
         
         plat1rightWall.setTranslateX(200.0);
         plat1rightWall.setTranslateY(windowY * 0.8 + 1);
@@ -45,16 +44,13 @@ public class Stage1 extends GameStage {
         plat2leftWall.setTranslateX(windowX - 201);
         plat2leftWall.setTranslateY(windowY * 0.8 + 1);
         
-        rightBound.setTranslateX(windowX);
-        
         platforms.add(plat1rightWall);
         platforms.add(plat2leftWall);
-        platforms.add(rightBound);
     }
     
     private void setupCorners() {
-        Platform plat1rightCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
-        Platform plat2leftCorner = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat1rightCorner = new Platform(State.CORNER, 0, 0, 1, 0, 1, 1, 0, 1);
+        Platform plat2leftCorner = new Platform(State.CORNER, 0, 0, 1, 0, 1, 1, 0, 1);
         
         plat1rightCorner.setTranslateX(200.0);
         plat1rightCorner.setTranslateY(windowY * 0.8);
@@ -64,6 +60,22 @@ public class Stage1 extends GameStage {
         
         platforms.add(plat1rightCorner);
         platforms.add(plat2leftCorner);
+    }
+    
+    private void setupBounds() {
+        Platform leftBound = new Platform(State.RIGHTWALL, 0, 0, 50, 0, 50, windowY.intValue(), 0, windowY.intValue());
+        Platform rightBound = new Platform(State.LEFTWALL, 0, 0, 50, 0, 50, windowY.intValue(), 0, windowY.intValue());
+        Platform ceiling = new Platform(State.AIR, 0, 0, windowX.intValue(), 0, windowX.intValue(), 50, 0, 50);
+        
+        leftBound.setTranslateX(-50d);
+        
+        rightBound.setTranslateX(windowX);
+        
+        ceiling.setTranslateY(-50d);
+        
+        platforms.add(leftBound);
+        platforms.add(rightBound);
+        platforms.add(ceiling);
     }
     
     @Override

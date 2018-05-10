@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
@@ -41,22 +42,25 @@ public class OptionsMenu {
         scroll.setMaxHeight(windowY);
         scroll.setFitToWidth(true);
         
-        Button fullscreenButton = new Button("Toggle fullscreen mode");
-        options.getChildren().add(fullscreenButton);
-        
         Button changeNameButton = new Button("Change your username");
         options.getChildren().add(changeNameButton);
         
-        for (int i = 1; i < 16; i++) {
-            options.getChildren().add(new Button("Placeholder " + i));
-        }
+        Button resetDatabaseButton = new Button("Reset the database");
+        options.getChildren().add(resetDatabaseButton);
         
-        fullscreenButton.setOnAction((event) -> {
-            logic.toggleFullscreen();
-        });
+        options.getChildren().add(new Label("There was no time to make more options"));
+        options.getChildren().add(new Label("so take these non-functioning buttons."));
+        
+        for (int i = 1; i <= 10; i++) {
+            options.getChildren().add(new Button("Button " + i));
+        }
         
         changeNameButton.setOnAction((event) -> {
             logic.nameChangeDialog();
+        });
+        
+        resetDatabaseButton.setOnAction((event) -> {
+            logic.databaseResetDialog();
         });
         
         scene.setOnKeyPressed(event -> {

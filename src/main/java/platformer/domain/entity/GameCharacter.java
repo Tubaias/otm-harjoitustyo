@@ -55,6 +55,10 @@ public class GameCharacter {
     public double getX() {
         return this.x;
     }
+    
+    public void setY(double y) {
+        this.y = y;
+    }
 
     public double getY() {
         return this.y;
@@ -303,11 +307,14 @@ public class GameCharacter {
     }
     
     private void move() {
-        if (goingLeft && dX > -0.15) {
+        if (goingLeft && dX > -0.20) {
             dX -= 0.005;
-        } else if (goingRight && dX < 0.15) {
+        } else if (goingRight && dX < 0.20) {
             dX += 0.005;
         }
+        
+        goingLeft = false;
+        goingRight = false;
     }
 
     /**

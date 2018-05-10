@@ -97,4 +97,16 @@ public class TimeDao implements Dao<ClearTime, Integer> {
         conn.close();
     }
     
+    public void clearAll() throws SQLException {
+        Connection conn = db.getConnection();
+        PreparedStatement delete = conn.prepareStatement("DELETE FROM Cleartime");
+        PreparedStatement vacuum = conn.prepareStatement("VACUUM");
+        
+        delete.execute();
+        vacuum.execute();
+        
+        delete.close();
+        vacuum.close();
+        conn.close();
+    }
 }

@@ -9,8 +9,8 @@ import platformer.domain.entity.Coin;
 import platformer.domain.entity.EndPoint;
 import platformer.domain.entity.Platform;
 import platformer.domain.stage.GameStage;
-import platformer.domain.stage.Stage1;
 import platformer.domain.stage.Stage0;
+import platformer.domain.stage.Stage1;
 import platformer.domain.stage.Stage2;
 import platformer.domain.stage.Stage3;
 import platformer.ui.GameUI;
@@ -174,8 +174,16 @@ public class GameLogic {
                         && p.getType() != State.AIR) {
                     character.chargeUp();
                 }
-
-                character.setState(p.getType());
+                
+                if (p.getType() == State.CORNER) {
+                    character.setState(State.GROUND);
+                } else {
+                    character.setState(p.getType());
+                }
+                
+                if (p.getType() == State.GROUND) {
+                    character.setY(p.getPoly().getTranslateY() - 9);
+                }
 
                 lastCollision = p;
                 fallAgain = false;

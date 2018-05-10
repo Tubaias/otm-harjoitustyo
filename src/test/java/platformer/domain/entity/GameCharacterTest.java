@@ -28,6 +28,8 @@ public class GameCharacterTest {
         Double dX = ch.getDeltaX();
         
         ch.moveRight();
+        ch.update(10_000_000);
+        
         assertTrue(ch.getDeltaX() > dX);
     }
     
@@ -36,6 +38,8 @@ public class GameCharacterTest {
         Double dX = ch.getDeltaX();
         
         ch.moveLeft();
+        ch.update(10_000_000);
+        
         assertTrue(ch.getDeltaX() < dX);
     }
     
@@ -44,7 +48,7 @@ public class GameCharacterTest {
         ch.setState(State.AIR);
         double oldDY = ch.getDeltaY();
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(oldDY < ch.getDeltaY());
     }
     
@@ -53,7 +57,7 @@ public class GameCharacterTest {
         ch.setState(State.GROUND);
         double oldDY = ch.getDeltaY();
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(oldDY == ch.getDeltaY());
     }
     
@@ -61,7 +65,7 @@ public class GameCharacterTest {
     public void collisionReturnsTrueWhenCollides() {
         Platform plat = new Platform(State.GROUND, 0, 0, 500, 0, 500, 500, 0, 500);
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(ch.collision(plat));
     }
     
@@ -69,7 +73,7 @@ public class GameCharacterTest {
     public void collisionReturnsFalseWhenDoesntCollide() {
         Platform plat = new Platform(State.GROUND, 0, 0, 1, 0, 1, 1, 0, 1);
         
-        ch.update();
+        ch.update(10_000_000);
         assertFalse(ch.collision(plat));
     }
     
@@ -77,7 +81,7 @@ public class GameCharacterTest {
     public void coinCollisionReturnsTrueWhenCollides() {
         Coin coin = new Coin(15d, 25d);
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(ch.coinCollision(coin));
     }
     
@@ -85,7 +89,7 @@ public class GameCharacterTest {
     public void coinCollisionReturnsFalseWhenDoesntCollide() {
         Coin coin = new Coin(0d, 0d);
         
-        ch.update();
+        ch.update(10_000_000);
         assertFalse(ch.coinCollision(coin));
     }
     
@@ -93,7 +97,7 @@ public class GameCharacterTest {
     public void goalCollisionReturnsTrueWhenCollides() {
         EndPoint goal = new EndPoint(0, 0, 500, 0, 500, 500, 0, 500);
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(ch.goalCollision(goal));
     }
     
@@ -101,14 +105,14 @@ public class GameCharacterTest {
     public void goalCollisionReturnsFalseWhenDoesntCollide() {
         EndPoint goal = new EndPoint(0, 0, 1, 0, 1, 1, 0, 1);
         
-        ch.update();
+        ch.update(10_000_000);
         assertFalse(ch.goalCollision(goal));
     }
     
     @Test
     public void chargedJumpUpDecreasesDeltaY() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.GROUND);
         ch.chargeUp();
         
@@ -121,7 +125,7 @@ public class GameCharacterTest {
     @Test
     public void chargedJumpRightDecreasesDeltaY() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.GROUND);
         ch.chargeUp();
         
@@ -134,7 +138,7 @@ public class GameCharacterTest {
     @Test
     public void chargedJumpLeftDecreasesDeltaY() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.GROUND);
         ch.chargeUp();
         
@@ -147,7 +151,7 @@ public class GameCharacterTest {
     @Test
     public void chargedJumpRightIncreasesDeltaX() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.GROUND);
         ch.chargeUp();
         
@@ -160,7 +164,7 @@ public class GameCharacterTest {
     @Test
     public void chargedJumpLeftDecreasesDeltaX() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.GROUND);
         ch.chargeUp();
         
@@ -173,44 +177,44 @@ public class GameCharacterTest {
     @Test
     public void leftWallStickStopsXMovement() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.LEFTWALL);
         ch.chargeUp();
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(ch.getDeltaX() == 0);
     }
     
     @Test
     public void leftWallStickStopsYMovement() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.LEFTWALL);
         ch.chargeUp();
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(ch.getDeltaY() == 0);
     }
     
     @Test
     public void rightWallStickStopsXMovement() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.RIGHTWALL);
         ch.chargeUp();
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(ch.getDeltaX() == 0);
     }
     
     @Test
     public void rightWallStickStopsYMovement() {
         ch.moveRight();
-        ch.update();
+        ch.update(10_000_000);
         ch.setState(State.RIGHTWALL);
         ch.chargeUp();
         
-        ch.update();
+        ch.update(10_000_000);
         assertTrue(ch.getDeltaY() == 0);
     }
 }
