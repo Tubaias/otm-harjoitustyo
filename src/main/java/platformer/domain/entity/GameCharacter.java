@@ -297,7 +297,9 @@ public class GameCharacter {
      * friction.
      */
     public void stopOnGround() {
-        this.dX = 0d;
+        dX = 0d;
+        goingRight = false;
+        goingLeft = false;
     }
     
     private void move() {
