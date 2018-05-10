@@ -30,6 +30,7 @@ public class GameLogic {
     private long chargeCountdown;
     private long startTime;
     private long stageStartTime;
+    private long lastFrame;
     private boolean firstCycle;
     private boolean playThroughMode;
 
@@ -123,7 +124,7 @@ public class GameLogic {
                     }
                 }
 
-                character.update();
+                character.update(now - lastFrame);
 
                 if (currentStage != null) {
                     checkPlatformCollisions();
@@ -134,6 +135,8 @@ public class GameLogic {
                         checkGoalCollisions(now);
                     }
                 }
+                
+                lastFrame = now;
             }
         };
 

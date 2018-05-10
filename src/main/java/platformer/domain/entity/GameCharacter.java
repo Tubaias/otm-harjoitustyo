@@ -17,6 +17,8 @@ public class GameCharacter {
     private double dY;
     private State state;
     private boolean charged;
+    private boolean goingRight;
+    private boolean goingLeft;
     private double chargeDelta;
     private double jumpHeight;
 
@@ -173,16 +175,20 @@ public class GameCharacter {
 
     /**
      * Handles all movement that happens on a frame.
+     * @param time Amount of time that's passed since the last update call.
      */
-    public void update() {
+    public void update(long time) {
+        double multiplier = time / 1_000_000;
+        
         double oldX = x;
         double oldY = y;
 
+        move();
         checkMovementBlocks();
         capDeltas();
 
-        x += dX;
-        y += dY;
+        x += dX * multiplier;
+        y += dY * multiplier;
 
         poly.setTranslateX(x);
         poly.setTranslateY(y);
@@ -190,7 +196,7 @@ public class GameCharacter {
         ghost = new Polyline(oldX + 5, oldY + 5, x + 5, y + 5);
 
         if (state != State.GROUND && !((state == State.LEFTWALL && charged) || (state == State.RIGHTWALL && charged))) {
-            dY += 0.0015;
+            dY += 0.0015 * multiplier;
         }
     }
 
@@ -293,23 +299,29 @@ public class GameCharacter {
     public void stopOnGround() {
         this.dX = 0d;
     }
-
-    /**
-     * Accelerates the character right, up to a cap.
-     */
-    public void moveRight() {
-        if (dX < 0.15) {
+    
+    private void move() {
+        if (goingLeft && dX > -0.15) {
+            dX -= 0.005;
+        } else if (goingRight && dX < 0.15) {
             dX += 0.005;
         }
     }
 
     /**
-     * Accelerates the character left, up to a cap.
+     * Sets up a flag for the character to move right in the next update.
+     */
+    public void moveRight() {
+        goingRight = true;
+        goingLeft = false;
+    }
+
+    /**
+     * Sets up a flag for the character to move left in the next update.
      */
     public void moveLeft() {
-        if (dX > -0.15) {
-            dX -= 0.005;
-        }
+        goingLeft = true;
+        goingRight = false;
     }
 
     /**

@@ -99,7 +99,7 @@ public class GameUI {
         infoBar.getChildren().add(goBack);
         infoBar.getChildren().add(timer);
         
-        infoBar.setSpacing(-149);
+        infoBar.setSpacing(-120);
 
         BorderPane gameLayout = new BorderPane();
         gameLayout.setCenter(gameDraw);
