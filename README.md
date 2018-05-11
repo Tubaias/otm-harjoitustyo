@@ -42,7 +42,7 @@ Komento
 mvn clean compile assembly:single
 ```
 
-generoi hakemistoon _target_ suoritettavan jar-tiedoston _otm-platformer-Viikko 5-jar-with-dependencies.jar_
+generoi hakemistoon _target_ suoritettavan jar-tiedoston _otm-platformer-1.0-jar-with-dependencies.jar_
 
 ### JavaDoc
 
