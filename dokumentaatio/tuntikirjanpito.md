@@ -20,4 +20,5 @@
 | 4.5.  | 4    | Täysi tietokannan käyttö, tulosruutu, koko pelin pelaaminen kerralla |
 | 9.5.  | 5    | Tasot valmiita ja koko pelin pelaaminen kerralla toimii täysin, logiikka optional parannuksia vaille valmis |
 | 9.5.  | 3    | Pelilogiikan eriyttäminen frameratesta, tietokannan resetointi ja muita pieniä logiikkaparannuksia |
-| yht   | 56   | | 
+| 11.5. | 7    | Säätöä, testejä, javadocs, dokumentaatio |
+| yht   | 63   | | 
