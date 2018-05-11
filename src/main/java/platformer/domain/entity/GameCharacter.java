@@ -7,6 +7,10 @@ import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
 import platformer.domain.State;
 
+/**
+ * A representation of the character the player controls in-game.
+ * @author tote
+ */
 public class GameCharacter {
 
     private Polygon poly;

@@ -7,6 +7,10 @@ import javafx.scene.Scene;
 import platformer.ui.GameUI;
 import platformer.ui.MainMenu;
 
+/**
+ * A non-functional MenuLogic class for testing purposes.
+ * @author tote
+ */
 public class FakeMenuLogic implements MenuLogic {
 
     @Override

@@ -13,6 +13,10 @@ import platformer.ui.GameUI;
 import platformer.ui.MainMenu;
 import platformer.ui.NameMenu;
 
+/**
+ * Main logic class for handling all scene- and menu-related functionality.
+ * @author tote
+ */
 public class RealMenuLogic implements MenuLogic {
 
     private Stage stage;
@@ -26,7 +30,7 @@ public class RealMenuLogic implements MenuLogic {
     private Scene timeDisplay;
 
     /**
-     * MenuLogic class constructor.
+     * RealMenuLogic class constructor.
      *
      * @param stage main stage that the menulogic manipulates
      * @param db database for saving username and times

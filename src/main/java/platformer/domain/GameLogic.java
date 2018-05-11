@@ -15,6 +15,10 @@ import platformer.domain.stage.Stage2;
 import platformer.domain.stage.Stage3;
 import platformer.ui.GameUI;
 
+/**
+ * Main logic class for the game itself.
+ * @author tote
+ */
 public class GameLogic {
 
     private int windowX;
