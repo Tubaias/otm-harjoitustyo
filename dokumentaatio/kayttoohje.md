@@ -14,7 +14,7 @@ java -jar otm-platformer-1.0.jar
 
 ## Päävalikko
 
-<img src="https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/kuvat/mainmenu.png" width="400">
+<img src="https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/kuvat/mainmenu.png" width="300">
 
 Päävalikossa painikkeet:
 - Start game: Aloittaa uuden täyden läpipeluun.
@@ -27,3 +27,8 @@ Päävalikossa painikkeet:
 <img src="https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/kuvat/gamescreen.png" width="800">
 
 Kuvassa nimettynä pelin eri elementit. Taso voitetaan keräämällä kaikki kolikot ja pääsemällä sen jälkeen maaliin. Ajastin mittaa tasoon tai läpipeluuseen kulunutta aikaa.
+
+## Kontrollit
+
+Valikoissa taaksepäin voi siirtyä ESC-näppäimellä ja eteenpäin välilyönnillä. 
+Peliruudussa hahmoa voi ohjata nuolinäppäimillä, nykyisen tason voi aloittaa alusta R-näppäimellä ja koko läpipeluun voi aloittaa alusta T-näppäimellä.
