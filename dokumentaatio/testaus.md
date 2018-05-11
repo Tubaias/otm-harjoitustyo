@@ -6,6 +6,9 @@ Ohjelmaa on testattu sekä automatisoiduin yksikkö- ja integraatiotestein JUnit
 
 ### sovelluslogiikka
 
+Automatisoitujen testien ytimen moudostavat pelilogiikkaa testaavat integraatiotestit [GameLogicTest](https://github.com/Tubaias/otm-harjoitustyo/blob/master/src/test/java/platformer/domain/GameLogicTest.java) ja [GameCharacterTest](https://github.com/Tubaias/otm-harjoitustyo/blob/master/src/test/java/platformer/domain/entity/GameCharacterTest.java) joiden määrittelevät testitapaukset simuloivat pelin yleisiä toiminnalisuuksia ja GameLogic- sekä GameCharacter-luokkien integraatiota.
+
+Testit käyttävät hyödykseen MenuLogic-interfacen toteuttavaa FakeMenuLogic-luokkaa, koska oikean toiminnallisuuden tarjoava RealMenuLogic-luokka ei toimi JUnit-testien kanssa.
 
 ### DAO-luokat
 
@@ -13,11 +16,11 @@ Molempien DAO-luokkien toiminnallisuus on testattu luomalla testeissä tilapäin
 
 ### Testauskattavuus
 
-Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen rivikattavuus on 94% ja haarautumakattavuus 96%
+Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen rivikattavuus on 86% ja haarautumakattavuus 63%
 
-kuva
+<img src="https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/kuvat/tests.png" width="800">
 
-Testaamatta jäivät tilanteet, joissa käyttäjät tai tehtävät tallettavia tiedostoja ei ole, tai niihin ei ole luku- ja kirjoitusoikeutta.
+Testaamatta jäivät muutamat sovelluslogiikan erityistapaukset, sekä RealMenuLogic-luokka, jota ei ollut javafx:n rajoitusten takia mahdollista testata.
 
 ## Järjestelmätestaus
 
