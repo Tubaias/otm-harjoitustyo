@@ -32,7 +32,7 @@ public class DatabaseClearMenu {
 
         exitLayout.setAlignment(Pos.CENTER);
 
-        exitLayout.add(new Label("Are you sure you want to delete all times?"), 1, 0);
+        exitLayout.add(new Label("Are you sure you want to \ndelete all times?"), 1, 0);
         exitLayout.add(new Label(""), 1, 1);
         exitLayout.add(confirmButton, 0, 2);
         exitLayout.add(cancelButton, 2, 2);

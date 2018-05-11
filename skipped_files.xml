@@ -7,10 +7,13 @@
 <suppressions>
     <suppress files="platformer.ui.App.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.GameUI.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="platformer.ui.RealGameUI.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="platformer.ui.FakeGameUI.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.MainMenu.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.OptionsMenu.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.ExitMenu.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.LevelSelect.java" checks="[a-zA-Z0-9]*"/>
+<suppress files="platformer.ui.TimeDisplayMenu.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.NameMenu.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="platformer.ui.ErrorScreen.java" checks="[a-zA-Z0-9]*"/>
 	<suppress files="platformer.ui.DatabaseClearMenu.java" checks="[a-zA-Z0-9]*"/>

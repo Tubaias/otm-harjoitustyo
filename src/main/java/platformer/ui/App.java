@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import platformer.dao.Database;
+import platformer.domain.RealMenuLogic;
 
 public class App extends Application {
 
@@ -56,7 +57,7 @@ public class App extends Application {
             stage.setScene(es.getScene());
         }
 
-        menuLogic = new MenuLogic(stage, db);
+        menuLogic = new RealMenuLogic(stage, db);
         gameLogic = new GameLogic(gameWindowX, gameWindowY);
         gameLogic.setMenuLogic(menuLogic);
 
@@ -74,7 +75,7 @@ public class App extends Application {
     private void setupMenus() {
         optionsMenu = new OptionsMenu(menuLogic, windowX, windowY);
         mainMenu = new MainMenu(menuLogic, windowX, windowY);
-        gameUI = new GameUI(menuLogic, gameLogic, gameWindowX, gameWindowY);
+        gameUI = new RealGameUI(menuLogic, gameLogic, gameWindowX, gameWindowY);
         levelSelect = new LevelSelect(menuLogic, gameLogic, windowX, windowY);
         bestTimes = new TimeDisplayMenu(menuLogic, windowX, windowY);
 

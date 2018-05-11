@@ -24,6 +24,7 @@ public class GameCharacter {
 
     /**
      * GameCharacter class constructor. Initializes all private values.
+     *
      * @param translateX Initial x-coordinate for the character to spawn in
      * @param translateY Initial y-coordinate for the character to spawn in
      */
@@ -51,11 +52,15 @@ public class GameCharacter {
     public Polyline getGhost() {
         return this.ghost;
     }
+    
+    public void setX(double x) {
+        this.x = x;
+    }
 
     public double getX() {
         return this.x;
     }
-    
+
     public void setY(double y) {
         this.y = y;
     }
@@ -75,7 +80,7 @@ public class GameCharacter {
     public State getState() {
         return this.state;
     }
-    
+
     public double getChargeDelta() {
         return this.chargeDelta;
     }
@@ -99,8 +104,8 @@ public class GameCharacter {
     }
 
     /**
-     * Reverts the charged state, wipes momentum stored in chargeDelta and changes
-     * character color to black.
+     * Reverts the charged state, wipes momentum stored in chargeDelta and
+     * changes character color to black.
      */
     public void unCharge() {
         this.charged = false;
@@ -119,15 +124,33 @@ public class GameCharacter {
     /**
      * Checks collisions between the character and a platform and nudges the
      * character by one pixel when colliding with a wall or a ceiling.
+     *
      * @param plat Platform to check collisions with
      * @return Returns true if a collision occurred, otherwise returns false.
      */
     public boolean collision(Platform plat) {
         Polygon shape = plat.getPoly();
         Shape intersection = Shape.intersect(this.poly, shape);
+
+        if (this.ghost != null) {
+            boolean collided = ghostCollision(plat);
+            if (collided) {
+                return true;
+            }
+        }
+
+        return handlePlatformCollision(plat, intersection);
+    }
+
+    private boolean ghostCollision(Platform plat) {
+        Polygon shape = plat.getPoly();
         Shape ghostIntersection = Shape.intersect(this.ghost, shape);
 
-        if (intersection.getBoundsInLocal().getWidth() != -1 || ghostIntersection.getBoundsInLocal().getWidth() != -1) {
+        return handlePlatformCollision(plat, ghostIntersection);
+    }
+
+    private boolean handlePlatformCollision(Platform plat, Shape intersection) {
+        if (intersection.getBoundsInLocal().getWidth() != -1) {
             if (plat.getType() == State.RIGHTWALL) {
                 x++;
             } else if (plat.getType() == State.LEFTWALL) {
@@ -142,35 +165,35 @@ public class GameCharacter {
 
         return false;
     }
-    
+
     /**
      * Checks collisions between the character and a coin.
+     *
      * @param coin Coin to check collisions with
      * @return Returns true if a collision occurred, otherwise returns false.
      */
     public boolean coinCollision(Coin coin) {
         Shape shape = coin.getShape();
         Shape intersection = Shape.intersect(this.poly, shape);
-        Shape ghostIntersection = Shape.intersect(this.ghost, shape);
 
-        if (intersection.getBoundsInLocal().getWidth() != -1 || ghostIntersection.getBoundsInLocal().getWidth() != -1) {
+        if (intersection.getBoundsInLocal().getWidth() != -1) {
             return true;
         }
 
         return false;
     }
-    
+
     /**
      * Checks collisions between the character and an EndPoint.
+     *
      * @param goal EndPoint to check collisions with
      * @return Returns true if a collision occurred, otherwise returns false.
      */
     public boolean goalCollision(EndPoint goal) {
         Shape shape = goal.getPoly();
         Shape intersection = Shape.intersect(this.poly, shape);
-        Shape ghostIntersection = Shape.intersect(this.ghost, shape);
 
-        if (intersection.getBoundsInLocal().getWidth() != -1 || ghostIntersection.getBoundsInLocal().getWidth() != -1) {
+        if (intersection.getBoundsInLocal().getWidth() != -1) {
             return true;
         }
 
@@ -179,11 +202,12 @@ public class GameCharacter {
 
     /**
      * Handles all movement that happens on a frame.
+     *
      * @param time Amount of time that's passed since the last update call.
      */
     public void update(long time) {
         double multiplier = time / 1_000_000;
-        
+
         double oldX = x;
         double oldY = y;
 
@@ -237,15 +261,16 @@ public class GameCharacter {
     }
 
     /**
-     * Jumps in the given direction. If the character is charged a special charged
-     * jump will be executed.
+     * Jumps in the given direction. If the character is charged a special
+     * charged jump will be executed.
+     *
      * @param dir Direction to jump
      */
     public void jump(KeyCode dir) {
         if (state == State.AIR || (!charged && (state == State.RIGHTWALL || state == State.LEFTWALL))) {
             return;
         }
-        
+
         if (charged) {
             chargedJump(dir);
         } else {
@@ -306,14 +331,14 @@ public class GameCharacter {
         goingRight = false;
         goingLeft = false;
     }
-    
+
     private void move() {
         if (goingLeft && dX > -0.20) {
             dX -= 0.005;
         } else if (goingRight && dX < 0.20) {
             dX += 0.005;
         }
-        
+
         goingLeft = false;
         goingRight = false;
     }
@@ -336,6 +361,7 @@ public class GameCharacter {
 
     /**
      * Returns the character's current coordinates.
+     *
      * @return Current coordinates separated by a ":" -sign
      */
     @Override

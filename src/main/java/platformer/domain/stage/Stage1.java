@@ -84,9 +84,5 @@ public class Stage1 extends GameStage {
         
         goal.setTranslateX(windowX - 50);
         goal.setTranslateY(windowY * 0.8 - 50);
-        
-        //Coin coin1 = new Coin(windowX / 2, windowY / 2 - 50);
-        
-        //coins.add(coin1);
     }
 }

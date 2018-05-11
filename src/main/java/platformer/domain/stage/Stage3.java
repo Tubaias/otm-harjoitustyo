@@ -130,7 +130,7 @@ public class Stage3 extends GameStage {
     }
     
     private void setupWalls4() {
-        Platform rightBottomPillarLeft = new Platform(State.LEFTWALL, 0, 0, 51, 0, 51, windowY.intValue() / 2 -50, 0, windowY.intValue() / 2 - 50);
+        Platform rightBottomPillarLeft = new Platform(State.LEFTWALL, 0, 0, 51, 0, 51, windowY.intValue() / 2 - 50, 0, windowY.intValue() / 2 - 50);
         Platform rightBottomPillarRight = new Platform(State.RIGHTWALL, 0, 0, 50, 0, 50, windowY.intValue() / 2 - 50, 0, windowY.intValue() / 2 - 50);
         Platform rightTopPillarLeft = new Platform(State.LEFTWALL, 0, 0, 51, 0, 51, windowY.intValue() / 2 - 50, 0, windowY.intValue() / 2 - 50);
         Platform rightTopPillarRight = new Platform(State.RIGHTWALL, 0, 0, 50, 0, 50, windowY.intValue() / 2 - 50, 0, windowY.intValue() / 2 - 50);

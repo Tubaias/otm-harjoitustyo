@@ -10,13 +10,27 @@ import java.util.List;
 import platformer.domain.ClearTime;
 import platformer.domain.StageNum;
 
+/**
+ * Database access object for saving and retrieving clear times.
+ * @author tote
+ */
 public class TimeDao implements Dao<ClearTime, Integer> {
     private Database db;
     
+    /**
+     * Constructor.
+     * @param db Database that times will be saved to and retrieved from.
+     */
     public TimeDao(Database db) {
         this.db = db;
     }
 
+    /**
+     * Returns the current slowest time on a given stage.
+     * @param stageNumber Stage to search for times on.
+     * @return Returns the current slowest time or null if there are less than 10 times.
+     * @throws SQLException 
+     */
     @Override
     public ClearTime findOne(Integer stageNumber) throws SQLException {
         Connection conn = db.getConnection();
@@ -69,6 +83,12 @@ public class TimeDao implements Dao<ClearTime, Integer> {
         return times;
     }
 
+    /**
+     * Saves the given time to the database.
+     * @param clear Time to be saved to the database.
+     * @return The ClearTime that was given in as a parameter.
+     * @throws SQLException 
+     */
     @Override
     public ClearTime saveOrUpdate(ClearTime clear) throws SQLException {
         Connection conn = db.getConnection();
@@ -85,6 +105,11 @@ public class TimeDao implements Dao<ClearTime, Integer> {
         return clear;
     }
 
+    /**
+     * Removes a specified time from the database.
+     * @param key Id of the time to be removed.
+     * @throws SQLException 
+     */
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = db.getConnection();
@@ -97,6 +122,10 @@ public class TimeDao implements Dao<ClearTime, Integer> {
         conn.close();
     }
     
+    /**
+     * Wipes all times from the database and performs a vacuum to save space.
+     * @throws SQLException 
+     */
     public void clearAll() throws SQLException {
         Connection conn = db.getConnection();
         PreparedStatement delete = conn.prepareStatement("DELETE FROM Cleartime");

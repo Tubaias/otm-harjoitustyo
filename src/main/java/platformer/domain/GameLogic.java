@@ -55,16 +55,16 @@ public class GameLogic {
 
         hitCoins = new ArrayList<>();
         playThroughMode = false;
+
+        chargeCountdown = 0;
+        firstCycle = true;
     }
 
     /**
-     * Sets up values that depend on external classes and defines the
-     * animationtimer object that handles all frame-by-frame game logic.
+     * Defines the animationtimer-object that handles all frame-by-frame game
+     * logic.
      */
     public void setup() {
-        chargeCountdown = 0;
-        firstCycle = true;
-
         animationTimer = new AnimationTimer() {
 
             /**
@@ -75,72 +75,91 @@ public class GameLogic {
              */
             @Override
             public void handle(long now) {
-                if (firstCycle) {
-                    if (!playThroughMode) {
-                        startTime = now;
-                        gameUI.setStartTime(now);
-                    } else {
-                        stageStartTime = now;
-                    }
-
-                    firstCycle = false;
-                }
-
-                gameUI.updateTimer(now);
-                checkOutOfBounds();
-                checkCharge(now);
-
-                if (activeKeys.getOrDefault(KeyCode.LEFT, false)) {
-                    character.moveLeft();
-                } else if (character.getState() == State.GROUND && character.getDeltaX() < 0) {
-                    character.stopOnGround();
-                }
-
-                if (activeKeys.getOrDefault(KeyCode.RIGHT, false)) {
-                    character.moveRight();
-                } else if (character.getState() == State.GROUND && character.getDeltaX() > 0) {
-                    character.stopOnGround();
-                }
-
-                if (activeKeys.getOrDefault(KeyCode.UP, false)) {
-                    handleJump();
-                }
-
-                if (activeKeys.getOrDefault(KeyCode.ESCAPE, false)) {
-                    activeKeys.put(KeyCode.ESCAPE, false);
-                    fullReset();
-                    menuLogic.goToMain();
-                }
-
-                if (activeKeys.getOrDefault(KeyCode.R, false)) {
-                    activeKeys.put(KeyCode.R, false);
-                    reset();
-                }
-
-                if (activeKeys.getOrDefault(KeyCode.T, false)) {
-                    if (playThroughMode) {
-                        activeKeys.put(KeyCode.T, false);
-                        resetPlaythrough(now);
-                    }
-                }
-
-                character.update(now - lastFrame);
-
-                if (currentStage != null) {
-                    checkPlatformCollisions();
-
-                    if (!currentStage.getCoins().isEmpty()) {
-                        checkCoinCollisions();
-                    } else {
-                        checkGoalCollisions(now);
-                    }
-                }
-                
-                lastFrame = now;
+                handlingProtocol(now);
             }
         };
 
         animationTimer.start();
+    }
+
+    private void handlingProtocol(long now) {
+        handleVariables(now);
+
+        gameUI.updateTimer(now);
+        checkOutOfBounds();
+        checkCharge(now);
+
+        handleMovement();
+        handleSpecialInputs(now);
+
+        character.update(now - lastFrame);
+
+        handleCollisions(now);
+
+        lastFrame = now;
+    }
+
+    private void handleCollisions(long now) {
+        if (currentStage != null) {
+            checkPlatformCollisions();
+
+            if (!currentStage.getCoins().isEmpty()) {
+                checkCoinCollisions();
+            } else {
+                checkGoalCollisions(now);
+            }
+        }
+    }
+
+    private void handleVariables(long now) {
+        if (firstCycle) {
+            if (!playThroughMode) {
+                startTime = now;
+                gameUI.setStartTime(now);
+            } else {
+                stageStartTime = now;
+            }
+
+            firstCycle = false;
+        }
+    }
+
+    private void handleMovement() {
+        if (activeKeys.getOrDefault(KeyCode.LEFT, false)) {
+            character.moveLeft();
+        } else if (character.getState() == State.GROUND && character.getDeltaX() < 0) {
+            character.stopOnGround();
+        }
+
+        if (activeKeys.getOrDefault(KeyCode.RIGHT, false)) {
+            character.moveRight();
+        } else if (character.getState() == State.GROUND && character.getDeltaX() > 0) {
+            character.stopOnGround();
+        }
+
+        if (activeKeys.getOrDefault(KeyCode.UP, false)) {
+            handleJump();
+        }
+    }
+
+    private void handleSpecialInputs(long now) {
+        if (activeKeys.getOrDefault(KeyCode.ESCAPE, false)) {
+            activeKeys.put(KeyCode.ESCAPE, false);
+            fullReset();
+            menuLogic.goToMain();
+        }
+
+        if (activeKeys.getOrDefault(KeyCode.R, false)) {
+            activeKeys.put(KeyCode.R, false);
+            reset();
+        }
+
+        if (activeKeys.getOrDefault(KeyCode.T, false)) {
+            if (playThroughMode) {
+                activeKeys.put(KeyCode.T, false);
+                resetPlaythrough(now);
+            }
+        }
     }
 
     private void checkOutOfBounds() {
@@ -168,24 +187,7 @@ public class GameLogic {
 
         for (Platform p : currentStage.getPlatforms()) {
             if (character.collision(p)) {
-                if ((character.getState() == State.AIR
-                        && !((p.getType() == State.LEFTWALL || p.getType() == State.RIGHTWALL)
-                        && lastCollision == p))
-                        && p.getType() != State.AIR) {
-                    character.chargeUp();
-                }
-                
-                if (p.getType() == State.CORNER) {
-                    character.setState(State.GROUND);
-                } else {
-                    character.setState(p.getType());
-                }
-                
-                if (p.getType() == State.GROUND) {
-                    character.setY(p.getPoly().getTranslateY() - 9);
-                }
-
-                lastCollision = p;
+                handlePlatformCollision(p);
                 fallAgain = false;
             }
         }
@@ -195,6 +197,27 @@ public class GameLogic {
         } else if (fallAgain && !character.isCharged() && (character.getState() == State.LEFTWALL || character.getState() == State.RIGHTWALL)) {
             character.setState(State.AIR);
         }
+    }
+
+    private void handlePlatformCollision(Platform p) {
+        if ((character.getState() == State.AIR
+                && !((p.getType() == State.LEFTWALL || p.getType() == State.RIGHTWALL)
+                && lastCollision == p))
+                && p.getType() != State.AIR) {
+            character.chargeUp();
+        }
+
+        if (p.getType() == State.CORNER) {
+            character.setState(State.GROUND);
+        } else {
+            character.setState(p.getType());
+        }
+
+        if (p.getType() == State.GROUND) {
+            character.setY(p.getPoly().getTranslateY() - 9);
+        }
+
+        lastCollision = p;
     }
 
     private void checkCoinCollisions() {
@@ -250,25 +273,6 @@ public class GameLogic {
         loadStage(StageNum.ZERO);
     }
 
-    private void nextStage(long now) {
-        StageNum currentNumber = currentStage.getNumber();
-
-        switch (currentNumber) {
-            case ZERO:
-                loadStage(StageNum.ONE);
-                break;
-            case ONE:
-                loadStage(StageNum.TWO);
-                break;
-            case TWO:
-                loadStage(StageNum.THREE);
-                break;
-            default:
-                gameClear(now);
-                break;
-        }
-    }
-
     /**
      * Resets the game and loads up a stage based on the given stage enum.
      *
@@ -296,6 +300,10 @@ public class GameLogic {
 
         currentStage = gStage;
 
+        loadStageElements();
+    }
+
+    private void loadStageElements() {
         for (Platform p : currentStage.getPlatforms()) {
             gameUI.addShape(p.getPoly());
         }
@@ -355,21 +363,23 @@ public class GameLogic {
         boolean saved = menuLogic.assessAndSave(clear);
 
         if (saved) {
-            System.out.println("SAVED");
+            System.out.println("time saved");
         }
 
         if (playThroughMode) {
-            if (currentStage.getNumber() == StageNum.THREE) {
-                gameClear(now);
-            } else {
-                StageNum nextStage = StageNum.fromInt(currentStage.getNumber().getIntValue() + 1);
-                loadStage(nextStage);
-            }
-
-            return;
+            advancePlayThrough(now);
         }
 
         reset();
+    }
+
+    private void advancePlayThrough(long now) {
+        if (currentStage.getNumber() == StageNum.THREE) {
+            gameClear(now);
+        } else {
+            StageNum nextStage = StageNum.fromInt(currentStage.getNumber().getIntValue() + 1);
+            loadStage(nextStage);
+        }
     }
 
     /**
@@ -419,6 +429,14 @@ public class GameLogic {
 
     public GameStage getCurrentStage() {
         return this.currentStage;
+    }
+    
+    public boolean getPlaythroughMode() {
+        return this.playThroughMode;
+    }
+    
+    public long getStartTime() {
+        return this.startTime;
     }
 
     public void setActiveKeys(HashMap<KeyCode, Boolean> activeKeys) {

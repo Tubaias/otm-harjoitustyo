@@ -7,11 +7,20 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Database abstraction for DAO-classes.
+ * @author tote
+ */
 public class Database {
 
     private String dbName;
     private String address;
-
+    
+    /**
+     * Constructor.
+     * @param dbName Name of the database on disk.
+     * @throws SQLException 
+     */
     public Database(String dbName) throws SQLException {
         this.dbName = dbName;
         this.address = "jdbc:sqlite:" + dbName;
@@ -19,6 +28,11 @@ public class Database {
         makeIfDoesntExist();
     }
 
+    /**
+     * Returns a connection to the database
+     * @return Connection to the database.
+     * @throws SQLException 
+     */
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(address);
     }

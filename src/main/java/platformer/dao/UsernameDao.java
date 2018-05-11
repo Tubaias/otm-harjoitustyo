@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Database access object for saving and retrieving the current username.
+ * @author tote
+ */
 public class UsernameDao implements Dao<String, Integer> {
     private Database db;
     

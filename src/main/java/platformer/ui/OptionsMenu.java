@@ -48,8 +48,8 @@ public class OptionsMenu {
         Button resetDatabaseButton = new Button("Reset the database");
         options.getChildren().add(resetDatabaseButton);
         
-        options.getChildren().add(new Label("There was no time to make more options"));
-        options.getChildren().add(new Label("so take these non-functioning buttons."));
+        options.getChildren().add(new Label("didn't have time to add more options"));
+        options.getChildren().add(new Label("take these non-functioning buttons"));
         
         for (int i = 1; i <= 10; i++) {
             options.getChildren().add(new Button("Button " + i));
