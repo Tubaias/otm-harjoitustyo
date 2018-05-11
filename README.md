@@ -13,6 +13,8 @@ Ohjelmistotekniikan menetelmät -kurssia varten toteutettava harjoitustyö. Ohje
 
 [Viikko 6](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/viikko6)
 
+[1.0](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/1.0)
+
 ## Tämänhetkinen toiminnallisuus
 Ohjelmassa on päävalikko, tasonvalintaruutu, tulosruutu, asetusvalikko, ja peliruutu, jossa on 'pelaajahahmo' ja nappi pääruutuun palaamista varten. Ohjelmassa voi siirtyä taaksepäin Esc-näppäimellä ja peliruudussa hahmoa voi ohjata nuolinäppäimillä. Peliruudussa nykyisen tason voi aloittaa alusta R-näppäimellä ja koko pelin läpipeluun voi aloittaa alusta T-näppäimellä.
 
