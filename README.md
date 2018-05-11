@@ -18,7 +18,7 @@ Ohjelmistotekniikan menetelmät -kurssia varten toteutettu harjoitustyö. Ohjelm
 
 [Viikko 6](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/viikko6)
 
-[1.0](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/1.0)
+[1.0](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/Loppupalautus)
 
 ## Komentorivitoiminnot
 
