@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto [otm-platformer-1.0.jar](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/1.0)
+Lataa tiedosto [otm-platformer-1.0.jar](https://github.com/Tubaias/otm-harjoitustyo/releases/tag/Loppupalautus)
 
 Mitään ylimääräistä konfiguraatiota ei vaadita. Sovellus luo tallennuskansioonsa tietokannan nimellä platformerDB.db.
 
