@@ -1,11 +1,13 @@
 # OTM-harjoitustyö
 Ohjelmistotekniikan menetelmät -kurssia varten toteutettava harjoitustyö. Ohjelman on tarkoitus olla yksinkertainen tasohyppelypeli, joka toteutetaan Javan ja Mavenin avulla.
 ## Dokumentaatio
-[Käyttöohje](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+[Käyttöohje](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)  
 
 [Vaatimusmäärittely](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)  
 
 [Arkkitehtuurikuvaus](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)  
+
+[Testausdokumentti](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/testaus.md)  
 
 [Työaikakirjanpito](https://github.com/Tubaias/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
