@@ -252,6 +252,7 @@ public class GameCharacter {
             dY -= jumpHeight;
         }
 
+        y--;
         state = State.AIR;
     }
 
